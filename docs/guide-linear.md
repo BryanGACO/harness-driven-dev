@@ -75,17 +75,31 @@ cp .env.example .env
 
 ### In GitHub (for CI — the Linear Bridge workflow)
 
+The Linear Bridge workflow runs in GitHub Actions and needs the key to create bugs in Linear when CI fails. You must save it as a repository secret.
+
+**Option A: Via terminal (requires [GitHub CLI](https://cli.github.com/))**
+
 ```bash
-# This will prompt you to paste the key
+# Make sure you're in the repo directory
+cd ~/projects/harness-driven-dev
+
+# Set the secret — it will prompt you to paste the value
 gh secret set LINEAR_API_KEY
+
+# Paste your lin_api_xxxxxxxxxx key and press Enter
+# Expected output: ✓ Set secret LINEAR_API_KEY for your-user/harness-driven-dev
 ```
 
-Or manually:
-1. Go to your repo on GitHub → **Settings** → **Secrets and variables** → **Actions**
+**Option B: Via GitHub web**
+
+1. Go to https://github.com/felirangelp/harness-driven-dev/settings/secrets/actions
+   - Or navigate: repo → **Settings** tab → **Secrets and variables** → **Actions**
 2. Click **New repository secret**
-3. Name: `LINEAR_API_KEY`
-4. Value: paste your `lin_api_...` key
-5. Click **Add secret**
+3. Fill in:
+   - **Name**: `LINEAR_API_KEY`
+   - **Secret**: paste the same `lin_api_...` key you put in `.env`
+4. Click **Add secret**
+5. You should see `LINEAR_API_KEY` listed under Repository secrets
 
 ## 7. Create Demo Issues
 
