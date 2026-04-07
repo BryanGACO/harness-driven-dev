@@ -103,11 +103,25 @@ gh secret set LINEAR_API_KEY
 
 ## 7. Create Demo Issues
 
-Now that you have the API key configured, you can create issues directly from Claude Code, via CLI, or manually.
+The demo uses 3 simple features for the Task Board. Each one is small enough to implement in minutes, but complex enough to show the full harness flow.
+
+| Issue | What it does | Why it's in the demo |
+|-------|-------------|---------------------|
+| **Add dark mode toggle** | Adds a button to switch between light and dark themes | Perfect for the "secret blocked" moment — the agent writes a toggle and we test the full commit → hook → CI flow |
+| **Add task counter per column** | Shows "To Do (3)" instead of just "To Do" in column headers | Quick feature that demonstrates `/start-issue` → code → `/close-issue` without drama |
+| **Add drag and drop** | Lets users drag tasks between columns instead of clicking arrows | More complex feature, good for showing that the harness scales |
+
+Now that you have the API key configured, you can create these issues from Claude Code, via CLI, or manually.
 
 ### Option A: From Claude Code (recommended)
 
-Start Claude Code in the project directory and ask:
+Start Claude Code in the project directory and tell the agent:
+
+```
+Create the 3 demo issues
+```
+
+Or create them one by one:
 
 ```
 /create-issue Add dark mode toggle
@@ -124,28 +138,28 @@ source .venv/bin/activate
 
 python3 scripts/linear_client.py create "Add dark mode toggle" \
   "## Acceptance Criteria
-- [ ] Toggle button visible
-- [ ] Dark/light styles applied
-- [ ] Preference saved in localStorage"
+- [ ] Toggle button visible in the header
+- [ ] Dark and light styles applied to the board
+- [ ] User preference saved in localStorage"
 
 python3 scripts/linear_client.py create "Add task counter per column" \
   "## Acceptance Criteria
-- [ ] Counter shows in column header
-- [ ] Updates on add/move/delete"
+- [ ] Counter number shows in each column header
+- [ ] Counter updates when tasks are added, moved, or deleted"
 
 python3 scripts/linear_client.py create "Add drag and drop between columns" \
   "## Acceptance Criteria
-- [ ] Tasks draggable between columns
-- [ ] State updates on drop"
+- [ ] Tasks can be dragged from one column to another
+- [ ] Task state updates on drop"
 ```
 
 ### Option C: Manually in Linear
 
 1. Go to your team view in Linear
 2. Click **+ Create issue** (or press `C`)
-3. Create each issue with a title and description
+3. Create each issue with the title and description from the table above
 
-> **Important**: Always include `## Acceptance Criteria` with `- [ ]` checkboxes. The harness gate 3 checks these boxes to verify Definition of Done.
+> **Important**: Always include `## Acceptance Criteria` with `- [ ]` checkboxes. The harness gate 3 checks these boxes to verify the Definition of Done.
 
 ## 8. Connect Linear with GitHub
 
