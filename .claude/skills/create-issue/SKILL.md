@@ -1,14 +1,14 @@
 ---
 name: create-issue
-description: Create a new issue in Linear with title, description, and acceptance criteria
+description: Create a well-documented issue in Linear with objective, description, acceptance criteria, and technical notes
 user-invocable: true
 allowed-tools: Bash(python3 scripts/*)
-argument-hint: "<TITLE> [description or acceptance criteria]"
+argument-hint: "<TITLE> [details]"
 ---
 
 # Create Issue
 
-Create a new issue in Linear.
+Create a well-documented issue in Linear following a standard template.
 
 ## Usage Examples
 
@@ -20,14 +20,27 @@ Create a new issue in Linear.
 
 ## Steps
 
-1. **Parse the request**: Extract the title and any description or acceptance criteria from the user's input.
+1. **Parse the request**: Extract the title and any details the user provides.
 
-2. **Build the description**: If the user provides acceptance criteria or requirements, format them as:
+2. **Build the description** using this standard template:
+
    ```markdown
+   ## Objective
+   Brief description of what this issue accomplishes and why it matters.
+
+   ## Description
+   Detailed explanation of the feature, bug, or task. Include context
+   that helps understand the scope and approach.
+
    ## Acceptance Criteria
-   - [ ] First criterion
-   - [ ] Second criterion
-   - [ ] Third criterion
+   - [ ] First measurable criterion
+   - [ ] Second measurable criterion
+   - [ ] Third measurable criterion
+
+   ## Technical Notes
+   - Relevant files, components, or areas of the codebase
+   - Dependencies or constraints
+   - Suggested approach (if applicable)
    ```
 
 3. **Create the issue**:
@@ -35,14 +48,32 @@ Create a new issue in Linear.
    python3 scripts/linear_client.py create "<TITLE>" "<DESCRIPTION>"
    ```
 
-4. **Confirm** to the user:
-   ```
-   Created: DEMO-X  <title>
-   URL: https://linear.app/...
-   ```
+4. **Confirm** to the user showing the issue ID, title, and URL.
+
+## Template Rules
+
+- **Objective**: Always include. One sentence explaining the "what" and "why".
+- **Description**: Always include. 2-3 sentences with context, scope, and approach.
+- **Acceptance Criteria**: Always include. Each criterion must be:
+  - Specific and measurable (not vague like "works well")
+  - Testable (can be verified as done or not done)
+  - Written as `- [ ]` checkboxes (the harness gate 3 checks these)
+- **Technical Notes**: Include when relevant. Files to modify, dependencies, constraints.
+
+## Examples of Good vs Bad Criteria
+
+**Bad:**
+- [ ] Dark mode works
+- [ ] Looks good
+
+**Good:**
+- [ ] Toggle button visible in the header area
+- [ ] Clicking toggle switches all board styles between dark and light themes
+- [ ] User preference persists across browser sessions via localStorage
 
 ## Rules
 
-- Always include `## Acceptance Criteria` with `- [ ]` checkboxes when the user provides requirements.
-- If the user doesn't specify criteria, ask what the acceptance criteria should be.
-- The issue is created in the team defined by `LINEAR_TEAM_KEY` (default: `DEMO`).
+- If the user gives a vague request, infer reasonable acceptance criteria from the project context.
+- If the user only gives a title, generate the full description based on the project (Task Board).
+- The issue is created in the team defined by `LINEAR_TEAM_KEY` env var.
+- Every issue must have at least: Objective, Description, and Acceptance Criteria.

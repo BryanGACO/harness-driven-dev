@@ -6,6 +6,7 @@ Uses only stdlib (no pip dependencies).
 Usage:
   python scripts/linear_client.py get DEMO-1
   python scripts/linear_client.py create "Title" ["Description"]
+  python scripts/linear_client.py update DEMO-1 "New description"
   python scripts/linear_client.py move DEMO-1 "In Progress"
   python scripts/linear_client.py comment DEMO-1 "Evidence message"
   python scripts/linear_client.py list [--state "In Progress"]
@@ -168,6 +169,42 @@ def add_comment(issue_id, body):
     return True
 
 
+def update_issue(issue_id, description=None, title=None):
+    """Update an issue's description and/or title. Returns True/False."""
+    issue = get_issue(issue_id)
+    if not issue:
+        print(f"Issue {issue_id} not found.", file=sys.stderr)
+        return False
+
+    input_fields = []
+    variables = {"id": issue["id"]}
+
+    if description is not None:
+        variables["description"] = description
+        input_fields.append("description: $description")
+    if title is not None:
+        variables["title"] = title
+        input_fields.append("title: $title")
+
+    if not input_fields:
+        return True
+
+    var_defs = "$id: String!"
+    if description is not None:
+        var_defs += ", $description: String"
+    if title is not None:
+        var_defs += ", $title: String"
+
+    _query(f"""
+        mutation({var_defs}) {{
+            issueUpdate(id: $id, input: {{ {", ".join(input_fields)} }}) {{
+                success
+            }}
+        }}
+    """, variables)
+    return True
+
+
 def list_issues(team_key=None, state=None):
     """List issues, optionally filtered by state."""
     if team_key is None:
@@ -276,6 +313,16 @@ def main():
             _print_issue(issue)
         else:
             print(f"Issue {sys.argv[2]} not found.")
+            sys.exit(1)
+
+    elif cmd == "update":
+        if len(sys.argv) < 4:
+            print('Usage: linear_client.py update <ISSUE_ID> "<DESCRIPTION>"')
+            sys.exit(1)
+        ok = update_issue(sys.argv[2], description=sys.argv[3])
+        if ok:
+            print(f"Updated {sys.argv[2]}")
+        else:
             sys.exit(1)
 
     elif cmd == "create":
