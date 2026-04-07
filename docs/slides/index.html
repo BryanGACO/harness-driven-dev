@@ -55,113 +55,174 @@
     .flow-cmd { color: #58a6ff; font-family: monospace; white-space: nowrap; }
     .flow-arrow { color: #8b949e; }
     .flow-desc { color: #c9d1d9; text-align: left; }
+
+    .lang-toggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background: #161b22;
+      border: 1px solid #21262d;
+      border-radius: 6px;
+      padding: 0.3rem 0.75rem;
+      font-size: 0.8rem;
+      z-index: 100;
+      color: #c9d1d9;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    .lang-toggle a { color: #58a6ff; text-decoration: none; cursor: pointer; }
+    .lang-toggle a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
+
+<div class="lang-toggle">
+  <strong>EN</strong> &middot; <a onclick="toggleLang()">ES</a>
+</div>
+
 <div class="reveal">
 <div class="slides">
 
 <!-- ── Slide 1: Title ── -->
 <section>
   <h1>Harness-Driven<br><span class="blue">Development</span></h1>
-  <p class="subtitle">Orchestrating Linear + GitHub with AI Agents</p>
+  <p class="subtitle" data-en="Orchestrating Linear + GitHub with AI Agents" data-es="Orquestando Linear + GitHub con Agentes IA">Orchestrating Linear + GitHub with AI Agents</p>
   <p class="muted" style="font-size:0.6em; margin-top:2em;">
-    Navigate: arrow keys &middot; <a href="../">Back to site</a>
+    <span data-en="Navigate: arrow keys" data-es="Navegar: teclas de flecha">Navigate: arrow keys</span> &middot; <a href="../" data-en="Back to site" data-es="Volver al sitio">Back to site</a>
   </p>
 </section>
 
 <!-- ── Slide 2: The Problem ── -->
 <section>
-  <h2>The Problem</h2>
+  <h2 data-en="The Problem" data-es="El Problema">The Problem</h2>
   <table>
     <thead>
       <tr>
-        <th class="green">What we KNOW</th>
-        <th class="yellow">What we DO</th>
-        <th class="red">What gets ENFORCED</th>
+        <th class="green" data-en="What we KNOW" data-es="Lo que SABEMOS">What we KNOW</th>
+        <th class="yellow" data-en="What we DO" data-es="Lo que HACEMOS">What we DO</th>
+        <th class="red" data-en="What gets ENFORCED" data-es="Lo que se CUMPLE">What gets ENFORCED</th>
       </tr>
     </thead>
     <tbody>
-      <tr><td>Commit conventions</td><td>Sometimes</td><td>Almost never</td></tr>
-      <tr><td>No secrets in code</td><td>After the incident</td><td>Sporadically</td></tr>
-      <tr><td>Tests before merge</td><td>On new projects</td><td>Until there's pressure</td></tr>
-      <tr><td>Traceable issues</td><td>On "important" PRs</td><td>When there's an audit</td></tr>
-      <tr><td>Definition of Done</td><td>In retros</td><td>Never mechanically</td></tr>
+      <tr>
+        <td>Commit conventions</td>
+        <td data-en="Sometimes" data-es="A veces">Sometimes</td>
+        <td data-en="Almost never" data-es="Casi nunca">Almost never</td>
+      </tr>
+      <tr>
+        <td>No secrets in code</td>
+        <td data-en="After the incident" data-es="Despu&eacute;s del incidente">After the incident</td>
+        <td data-en="Sporadically" data-es="Espor&aacute;dicamente">Sporadically</td>
+      </tr>
+      <tr>
+        <td>Tests before merge</td>
+        <td data-en="On new projects" data-es="En proyectos nuevos">On new projects</td>
+        <td data-en="Until there's pressure" data-es="Hasta que hay presi&oacute;n">Until there's pressure</td>
+      </tr>
+      <tr>
+        <td data-en="Traceable issues" data-es="Issues trazables">Traceable issues</td>
+        <td data-en='On "important" PRs' data-es='En PRs "importantes"'>On "important" PRs</td>
+        <td data-en="When there's an audit" data-es="Cuando hay auditor&iacute;a">When there's an audit</td>
+      </tr>
+      <tr>
+        <td>Definition of Done</td>
+        <td data-en="In retros" data-es="En retros">In retros</td>
+        <td data-en="Never mechanically" data-es="Nunca mec&aacute;nicamente">Never mechanically</td>
+      </tr>
     </tbody>
   </table>
 </section>
 
 <!-- ── Slide 3: The Pitch ── -->
 <section>
-  <h2>The Pitch</h2>
-  <blockquote style="border-left:4px solid #58a6ff; padding-left:1em; font-style:italic; font-size:1.1em;">
+  <h2 data-en="The Pitch" data-es="El Pitch">The Pitch</h2>
+  <blockquote style="border-left:4px solid #58a6ff; padding-left:1em; font-style:italic; font-size:1.1em;" data-en="&quot;The agent doesn't just write code &mdash; it <span class='blue'>self-enforces</span> the rules your team already knows but can't consistently follow.&quot;" data-es="&quot;El agente no solo escribe c&oacute;digo &mdash; se <span class='blue'>auto-enforcea</span> las reglas que tu equipo ya conoce pero no logra cumplir consistentemente.&quot;">
     "The agent doesn't just write code &mdash; it <span class="blue">self-enforces</span> the rules your team already knows but can't consistently follow."
   </blockquote>
 </section>
 
 <!-- ── Slide 4: How It Works ── -->
 <section>
-  <h2>3 Commands, 15+ Actions</h2>
+  <h2 data-en="3 Commands, 15+ Actions" data-es="3 Comandos, 15+ Acciones">3 Commands, 15+ Actions</h2>
   <div class="flow-row">
     <span class="flow-cmd">/start-issue DEMO-1</span>
     <span class="flow-arrow">&rarr;</span>
-    <span class="flow-desc">Reads Linear, creates branch, moves to In Progress</span>
+    <span class="flow-desc" data-en="Reads Linear, creates branch, moves to In Progress" data-es="Lee Linear, crea branch, mueve a In Progress">Reads Linear, creates branch, moves to In Progress</span>
   </div>
   <div class="flow-row">
     <span class="flow-cmd">"implement dark mode"</span>
     <span class="flow-arrow">&rarr;</span>
-    <span class="flow-desc">Writes code, tests, validates, push + PR</span>
+    <span class="flow-desc" data-en="Writes code, tests, validates, push + PR" data-es="Escribe c&oacute;digo, tests, valida, push + PR">Writes code, tests, validates, push + PR</span>
   </div>
   <div class="flow-row">
     <span class="flow-cmd">/close-issue DEMO-1</span>
     <span class="flow-arrow">&rarr;</span>
-    <span class="flow-desc">Runs 3 gates, posts evidence, moves to Done</span>
+    <span class="flow-desc" data-en="Runs 3 gates, posts evidence, moves to Done" data-es="Corre 3 gates, posta evidencia, mueve a Done">Runs 3 gates, posts evidence, moves to Done</span>
   </div>
 </section>
 
 <!-- ── Slide 5: 4 Layers ── -->
 <section>
-  <h2>4 Layers of Enforcement</h2>
+  <h2 data-en="4 Layers of Enforcement" data-es="4 Capas de Enforcement">4 Layers of Enforcement</h2>
   <div class="layer-box" style="border-left:4px solid #238636;">
-    <strong class="green">1</strong> <strong>Pre-commit</strong> <span class="muted">&mdash; gitleaks + issue-ref hook &mdash; "Won't let you commit bad code"</span>
+    <strong class="green">1</strong> <strong>Pre-commit</strong> <span class="muted" data-en="&mdash; gitleaks + issue-ref hook &mdash; &quot;Won't let you commit bad code&quot;" data-es="&mdash; gitleaks + issue-ref hook &mdash; &quot;No te deja commitear mal&quot;">&mdash; gitleaks + issue-ref hook &mdash; "Won't let you commit bad code"</span>
   </div>
   <div class="layer-box" style="border-left:4px solid #d29922;">
-    <strong class="yellow">2</strong> <strong>CI</strong> <span class="muted">&mdash; Tests + gitleaks &mdash; "If it fails, auto-creates bug in Linear"</span>
+    <strong class="yellow">2</strong> <strong>CI</strong> <span class="muted" data-en="&mdash; Tests + gitleaks &mdash; &quot;If it fails, auto-creates bug in Linear&quot;" data-es="&mdash; Tests + gitleaks &mdash; &quot;Si falla, auto-crea bug en Linear&quot;">&mdash; Tests + gitleaks &mdash; "If it fails, auto-creates bug in Linear"</span>
   </div>
   <div class="layer-box" style="border-left:4px solid #58a6ff;">
-    <strong class="blue">3</strong> <strong>Harness</strong> <span class="muted">&mdash; close_issue.sh with 3 gates &mdash; "Won't let you close without evidence"</span>
+    <strong class="blue">3</strong> <strong>Harness</strong> <span class="muted" data-en="&mdash; close_issue.sh with 3 gates &mdash; &quot;Won't let you close without evidence&quot;" data-es="&mdash; close_issue.sh con 3 gates &mdash; &quot;No te deja cerrar sin evidencia&quot;">&mdash; close_issue.sh with 3 gates &mdash; "Won't let you close without evidence"</span>
   </div>
   <div class="layer-box" style="border-left:4px solid #8957e5;">
-    <strong class="purple">4</strong> <strong>Webhook</strong> <span class="muted">&mdash; PR &rarr; In Progress, merge &rarr; Done &mdash; "Status syncs automatically"</span>
+    <strong class="purple">4</strong> <strong>Webhook</strong> <span class="muted" data-en="&mdash; PR &rarr; In Progress, merge &rarr; Done &mdash; &quot;Status syncs automatically&quot;" data-es="&mdash; PR &rarr; In Progress, merge &rarr; Done &mdash; &quot;El estado se sincroniza solo&quot;">&mdash; PR &rarr; In Progress, merge &rarr; Done &mdash; "Status syncs automatically"</span>
   </div>
 </section>
 
 <!-- ── Slide 6: The System ── -->
 <section>
-  <h2>System Components</h2>
+  <h2 data-en="System Components" data-es="Componentes del Sistema">System Components</h2>
   <table>
     <thead>
-      <tr><th>Component</th><th>Who uses it</th><th>What it does</th></tr>
+      <tr>
+        <th data-en="Component" data-es="Componente">Component</th>
+        <th data-en="Who uses it" data-es="Qui&eacute;n lo usa">Who uses it</th>
+        <th data-en="What it does" data-es="Qu&eacute; hace">What it does</th>
+      </tr>
     </thead>
     <tbody>
-      <tr><td class="green">Skills</td><td>YOU invoke them</td><td>Executes recipes that call the harness</td></tr>
-      <tr><td class="yellow">Harness</td><td>Skills or hooks</td><td>Verifies rules, runs validations</td></tr>
-      <tr><td class="red">Hooks</td><td>Activate AUTOMATICALLY</td><td>Execute harness scripts on git events</td></tr>
-      <tr><td class="purple">CLAUDE.md</td><td>Agent reads it</td><td>Defines the rules everything respects</td></tr>
+      <tr>
+        <td class="green">Skills</td>
+        <td data-en="YOU invoke them" data-es="T&Uacute; los invocas">YOU invoke them</td>
+        <td data-en="Executes recipes that call the harness" data-es="Ejecuta recetas que llaman al harness">Executes recipes that call the harness</td>
+      </tr>
+      <tr>
+        <td class="yellow">Harness</td>
+        <td data-en="Skills or hooks" data-es="Skills o hooks">Skills or hooks</td>
+        <td data-en="Verifies rules, runs validations" data-es="Verifica reglas, ejecuta validaciones">Verifies rules, runs validations</td>
+      </tr>
+      <tr>
+        <td class="red">Hooks</td>
+        <td data-en="Activate AUTOMATICALLY" data-es="Se activan AUTOM&Aacute;TICAMENTE">Activate AUTOMATICALLY</td>
+        <td data-en="Execute harness scripts on git events" data-es="Ejecutan scripts del harness en eventos de git">Execute harness scripts on git events</td>
+      </tr>
+      <tr>
+        <td class="purple">CLAUDE.md</td>
+        <td data-en="Agent reads it" data-es="El agente lo lee">Agent reads it</td>
+        <td data-en="Defines the rules everything respects" data-es="Define las reglas que todo respeta">Defines the rules everything respects</td>
+      </tr>
     </tbody>
   </table>
 </section>
 
 <!-- ── Slide 7: The Analogy ── -->
 <section>
-  <h2>The Restaurant Analogy</h2>
+  <h2 data-en="The Restaurant Analogy" data-es="La Analog&iacute;a del Restaurante">The Restaurant Analogy</h2>
   <div style="text-align:left; font-size:0.85em; max-width:600px; margin:0 auto;">
-    <p><strong class="purple">CLAUDE.md</strong> = The operations manual</p>
-    <p><strong class="green">Skills</strong> = The menu recipes</p>
-    <p><strong class="yellow">Harness</strong> = Quality control</p>
-    <p><strong class="red">Hooks</strong> = Automatic sensors (oven alarm, timer)</p>
+    <p><strong class="purple">CLAUDE.md</strong> = <span data-en="The operations manual" data-es="El manual de operaciones">The operations manual</span></p>
+    <p><strong class="green">Skills</strong> = <span data-en="The menu recipes" data-es="Las recetas del men&uacute;">The menu recipes</span></p>
+    <p><strong class="yellow">Harness</strong> = <span data-en="Quality control" data-es="Control de calidad">Quality control</span></p>
+    <p><strong class="red">Hooks</strong> = <span data-en="Automatic sensors (oven alarm, timer)" data-es="Sensores autom&aacute;ticos (alarma del horno, timer)">Automatic sensors (oven alarm, timer)</span></p>
   </div>
-  <p class="muted" style="margin-top:1.5em; font-size:0.75em;">
+  <p class="muted" style="margin-top:1.5em; font-size:0.75em;" data-en="The chef (agent) follows the recipes, quality control verifies,<br>and the sensors fire on their own." data-es="El chef (agente) sigue las recetas, el control de calidad verifica,<br>y los sensores se activan solos.">
     The chef (agent) follows the recipes, quality control verifies,<br>
     and the sensors fire on their own.
   </p>
@@ -169,8 +230,9 @@
 
 <!-- ── Slide 8: Secret Blocked ── -->
 <section>
-  <h2>The <span class="red">"Wow"</span> Moment</h2>
-  <pre><code>
+  <h2><span data-en="The" data-es="El">The</span> <span class="red">"Wow"</span> <span data-en="Moment" data-es="Momento">Moment</span></h2>
+  <div class="en-block">
+    <pre><code>
   # Moment 1: The mistake
   $ git commit -m "add dark mode"
   <span class="red">BLOCKED</span> — gitleaks detected a secret
@@ -184,13 +246,32 @@
   # Moment 3: Second layer
   $ --no-verify → GitHub Actions → gitleaks
   <span class="red">PR BLOCKED</span> + bug auto-created in Linear
-  </code></pre>
+    </code></pre>
+  </div>
+  <div class="es-block" style="display:none;">
+    <pre><code>
+  # Momento 1: El error
+  $ git commit -m "add dark mode"
+  <span class="red">BLOQUEADO</span> — gitleaks detect&oacute; un secret
+  → Nunca lleg&oacute; a GitHub
+
+  # Momento 2: La correcci&oacute;n
+  $ mv API_KEY → .env
+  $ git commit -m "add dark mode"
+  <span class="green">PAS&Oacute;</span>
+
+  # Momento 3: Segunda capa
+  $ --no-verify → GitHub Actions → gitleaks
+  <span class="red">PR BLOQUEADO</span> + bug auto-creado en Linear
+    </code></pre>
+  </div>
 </section>
 
 <!-- ── Slide 9: Gate System ── -->
 <section>
-  <h2>Gate System</h2>
-  <pre><code>
+  <h2 data-en="Gate System" data-es="Sistema de Gates">Gate System</h2>
+  <div class="en-block">
+    <pre><code>
   /close-issue DEMO-1
 
   Gate 1/3 — Tests passing?    → npm test       → <span class="green">PASS</span>
@@ -200,37 +281,51 @@
   ════════════════════════════════════════
   <span class="green">ALL GATES PASSED (3/3)</span>
   Evidence posted. Issue moved to Done.
-  </code></pre>
+    </code></pre>
+  </div>
+  <div class="es-block" style="display:none;">
+    <pre><code>
+  /close-issue DEMO-1
+
+  Gate 1/3 — &iquest;Tests pasan?         → npm test       → <span class="green">PASS</span>
+  Gate 2/3 — &iquest;CI green?            → gh run list    → <span class="green">PASS</span>
+  Gate 3/3 — &iquest;Criterios checkeados? → Linear API    → <span class="green">PASS</span>
+
+  ════════════════════════════════════════
+  <span class="green">TODOS LOS GATES PASARON (3/3)</span>
+  Evidencia posteada. Issue movido a Done.
+    </code></pre>
+  </div>
 </section>
 
 <!-- ── Slide 10: Before/After ── -->
 <section>
-  <h2>Before vs After</h2>
+  <h2 data-en="Before vs After" data-es="Antes vs Despu&eacute;s">Before vs After</h2>
   <div style="display:flex; gap:2em; justify-content:center; font-size:0.8em;">
     <div style="text-align:left;">
-      <h3 class="red">Without Harness</h3>
-      <p>10 manual steps</p>
-      <p>0 verifications</p>
-      <p>0 evidence</p>
-      <p>0 audit trail</p>
+      <h3 class="red" data-en="Without Harness" data-es="Sin Harness">Without Harness</h3>
+      <p data-en="10 manual steps" data-es="10 pasos manuales">10 manual steps</p>
+      <p data-en="0 verifications" data-es="0 verificaciones">0 verifications</p>
+      <p data-en="0 evidence" data-es="0 evidencia">0 evidence</p>
+      <p data-en="0 audit trail" data-es="0 audit trail">0 audit trail</p>
     </div>
     <div style="text-align:left;">
-      <h3 class="green">With Harness</h3>
-      <p>3 commands</p>
-      <p>5+ automatic verifications</p>
-      <p>Evidence on every close</p>
-      <p>Full audit trail</p>
+      <h3 class="green" data-en="With Harness" data-es="Con Harness">With Harness</h3>
+      <p data-en="3 commands" data-es="3 comandos">3 commands</p>
+      <p data-en="5+ automatic verifications" data-es="5+ verificaciones autom&aacute;ticas">5+ automatic verifications</p>
+      <p data-en="Evidence on every close" data-es="Evidencia en cada cierre">Evidence on every close</p>
+      <p data-en="Full audit trail" data-es="Audit trail completo">Full audit trail</p>
     </div>
   </div>
 </section>
 
 <!-- ── Slide 11: Key Lesson ── -->
 <section>
-  <h2>Key Lesson</h2>
-  <blockquote style="border-left:4px solid #d29922; padding-left:1em; font-style:italic;">
+  <h2 data-en="Key Lesson" data-es="Lecci&oacute;n Clave">Key Lesson</h2>
+  <blockquote style="border-left:4px solid #d29922; padding-left:1em; font-style:italic;" data-en="&quot;Automate with APIs, not magic abstractions.&quot;" data-es="&quot;Automatiza con APIs, no con abstracciones m&aacute;gicas.&quot;">
     "Automate with APIs, not magic abstractions."
   </blockquote>
-  <p class="muted" style="margin-top:1em; font-size:0.8em;">
+  <p class="muted" style="margin-top:1em; font-size:0.8em;" data-en="Custom GraphQL client: ~170 lines, full control.<br>Entire harness: &lt;500 lines of code." data-es="Cliente GraphQL propio: ~170 l&iacute;neas, control total.<br>Harness completo: &lt;500 l&iacute;neas de c&oacute;digo.">
     Custom GraphQL client: ~170 lines, full control.<br>
     Entire harness: &lt;500 lines of code.
   </p>
@@ -238,14 +333,14 @@
 
 <!-- ── Slide 12: Call to Action ── -->
 <section>
-  <h2>Get Started</h2>
-  <p style="font-size:1.2em;">Fork it. Star it. Adapt it.</p>
+  <h2 data-en="Get Started" data-es="Empieza Ya">Get Started</h2>
+  <p style="font-size:1.2em;" data-en="Fork it. Star it. Adapt it." data-es="Fork. Star. Ad&aacute;ptalo.">Fork it. Star it. Adapt it.</p>
   <p style="margin-top:1.5em;">
     <a href="https://github.com/felirangelp/harness-driven-dev" style="font-size:1.1em;">
       github.com/felirangelp/harness-driven-dev
     </a>
   </p>
-  <p class="muted" style="margin-top:2em; font-size:0.7em;">
+  <p class="muted" style="margin-top:2em; font-size:0.7em;" data-en="Setup: ~2 hours &middot; Harness: &lt;500 lines &middot; ROI: immediate" data-es="Setup: ~2 horas &middot; Harness: &lt;500 l&iacute;neas &middot; ROI: inmediato">
     Setup: ~2 hours &middot; Harness: &lt;500 lines &middot; ROI: immediate
   </p>
 </section>
@@ -262,6 +357,33 @@
     height: 700,
     margin: 0.1,
   });
+
+  var currentLang = 'en';
+
+  function toggleLang() {
+    currentLang = currentLang === 'en' ? 'es' : 'en';
+
+    // Toggle data-en/data-es text elements
+    document.querySelectorAll('[data-' + currentLang + ']').forEach(function(el) {
+      el.innerHTML = el.getAttribute('data-' + currentLang);
+    });
+
+    // Toggle code blocks (en-block / es-block)
+    document.querySelectorAll('.en-block').forEach(function(el) {
+      el.style.display = currentLang === 'en' ? '' : 'none';
+    });
+    document.querySelectorAll('.es-block').forEach(function(el) {
+      el.style.display = currentLang === 'es' ? '' : 'none';
+    });
+
+    // Update toggle button
+    var toggle = document.querySelector('.lang-toggle');
+    if (currentLang === 'en') {
+      toggle.innerHTML = '<strong>EN</strong> &middot; <a onclick="toggleLang()">ES</a>';
+    } else {
+      toggle.innerHTML = '<a onclick="toggleLang()">EN</a> &middot; <strong>ES</strong>';
+    }
+  }
 </script>
 </body>
 </html>
