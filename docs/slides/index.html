@@ -61,6 +61,214 @@
     .flow-arrow { color: #8b949e; }
     .flow-desc { color: #c9d1d9; text-align: left; }
 
+    /* ── Diagram styles ── */
+    .diagram-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3em;
+      margin: 1.2em 0;
+      flex-wrap: wrap;
+    }
+
+    .d-node {
+      background: #161b22;
+      border: 2px solid #30363d;
+      border-radius: 8px;
+      padding: 0.5em 0.8em;
+      font-size: 0.65em;
+      text-align: center;
+      min-width: 100px;
+    }
+
+    .d-node-accent { border-color: #58a6ff; }
+    .d-node-green { border-color: #238636; }
+    .d-node-red { border-color: #f85149; }
+    .d-node-yellow { border-color: #d29922; }
+    .d-node-purple { border-color: #8957e5; }
+
+    .d-arrow {
+      color: #8b949e;
+      font-size: 1.2em;
+      flex-shrink: 0;
+    }
+
+    .d-arrow-down {
+      color: #8b949e;
+      font-size: 1em;
+      text-align: center;
+      margin: 0.2em 0;
+    }
+
+    .d-label {
+      font-size: 0.55em;
+      color: #8b949e;
+      margin-top: 0.2em;
+    }
+
+    .d-node strong {
+      display: block;
+      color: #f0f6fc;
+      font-size: 1.1em;
+    }
+
+    /* System architecture diagram */
+    .arch-diagram {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4em;
+      font-size: 0.7em;
+    }
+
+    .arch-row {
+      display: flex;
+      gap: 0.8em;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .arch-box {
+      background: #161b22;
+      border: 2px solid #30363d;
+      border-radius: 8px;
+      padding: 0.4em 0.7em;
+      text-align: center;
+      min-width: 90px;
+    }
+
+    .arch-box strong { color: #f0f6fc; }
+
+    /* Gate visual */
+    .gate-visual {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5em;
+      max-width: 700px;
+      margin: 0.5em auto;
+    }
+
+    .gate-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6em;
+      font-size: 0.7em;
+    }
+
+    .gate-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9em;
+      flex-shrink: 0;
+      border: 2px solid;
+    }
+
+    .gate-icon-pass { border-color: #238636; color: #238636; }
+    .gate-icon-pending { border-color: #30363d; color: #8b949e; }
+
+    .gate-bar {
+      flex: 1;
+      background: #21262d;
+      border-radius: 4px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      padding: 0 0.8em;
+      justify-content: space-between;
+    }
+
+    .gate-bar-fill {
+      position: relative;
+    }
+
+    .gate-result {
+      font-weight: 700;
+    }
+
+    /* Before/After visual */
+    .comparison {
+      display: flex;
+      gap: 2em;
+      justify-content: center;
+      align-items: stretch;
+    }
+
+    .comparison-col {
+      flex: 1;
+      max-width: 400px;
+      background: #161b22;
+      border: 1px solid #21262d;
+      border-radius: 8px;
+      padding: 1.2em;
+      text-align: left;
+    }
+
+    .comparison-col h3 { margin-bottom: 0.6em; }
+
+    .comp-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      margin: 0.4em 0;
+      font-size: 0.75em;
+    }
+
+    .comp-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7em;
+      flex-shrink: 0;
+    }
+
+    .comp-icon-red { background: rgba(248,81,73,0.15); color: #f85149; }
+    .comp-icon-green { background: rgba(35,134,54,0.15); color: #238636; }
+
+    /* Secret flow visual */
+    .secret-flow {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6em;
+      max-width: 800px;
+      margin: 0 auto;
+      font-size: 0.7em;
+    }
+
+    .sf-step {
+      display: flex;
+      align-items: center;
+      gap: 0.6em;
+      background: #161b22;
+      border: 1px solid #21262d;
+      border-radius: 8px;
+      padding: 0.6em 1em;
+    }
+
+    .sf-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85em;
+      flex-shrink: 0;
+      border: 2px solid #30363d;
+      color: #8b949e;
+    }
+
+    .sf-content { flex: 1; }
+    .sf-result { font-weight: 700; flex-shrink: 0; font-size: 0.9em; }
+
     .lang-toggle {
       position: fixed;
       top: 1rem;
@@ -148,20 +356,49 @@
 <!-- ── Slide 4: How It Works ── -->
 <section>
   <h2 data-en="3 Commands, 15+ Actions" data-es="3 Comandos, 15+ Acciones">3 Commands, 15+ Actions</h2>
-  <div class="flow-row">
-    <span class="flow-cmd">/start-issue DEMO-1</span>
-    <span class="flow-arrow">&rarr;</span>
-    <span class="flow-desc" data-en="Reads Linear, creates branch, moves to In Progress" data-es="Lee Linear, crea branch, mueve a In Progress">Reads Linear, creates branch, moves to In Progress</span>
+
+  <!-- Flow 1 -->
+  <div class="diagram-flow">
+    <div class="d-node d-node-accent">
+      <strong>/start-issue</strong>
+      <div class="d-label">DEMO-1</div>
+    </div>
+    <span class="d-arrow">&rarr;</span>
+    <div class="d-node"><span data-en="Read Linear" data-es="Lee Linear">Read Linear</span></div>
+    <span class="d-arrow">&rarr;</span>
+    <div class="d-node"><span data-en="Create branch" data-es="Crea branch">Create branch</span></div>
+    <span class="d-arrow">&rarr;</span>
+    <div class="d-node d-node-green"><span data-en="In Progress" data-es="In Progress">In Progress</span></div>
   </div>
-  <div class="flow-row">
-    <span class="flow-cmd">"implement dark mode"</span>
-    <span class="flow-arrow">&rarr;</span>
-    <span class="flow-desc" data-en="Writes code, tests, validates, push + PR" data-es="Escribe c&oacute;digo, tests, valida, push + PR">Writes code, tests, validates, push + PR</span>
+
+  <!-- Flow 2 -->
+  <div class="diagram-flow">
+    <div class="d-node d-node-accent">
+      <strong data-en="&quot;implement&quot;" data-es="&quot;implementa&quot;">"implement"</strong>
+      <div class="d-label">dark mode</div>
+    </div>
+    <span class="d-arrow">&rarr;</span>
+    <div class="d-node"><span data-en="Write code" data-es="Escribe c&oacute;digo">Write code</span></div>
+    <span class="d-arrow">&rarr;</span>
+    <div class="d-node"><span data-en="Run tests" data-es="Corre tests">Run tests</span></div>
+    <span class="d-arrow">&rarr;</span>
+    <div class="d-node"><span data-en="Validate" data-es="Valida">Validate</span></div>
+    <span class="d-arrow">&rarr;</span>
+    <div class="d-node d-node-green">Push + PR</div>
   </div>
-  <div class="flow-row">
-    <span class="flow-cmd">/close-issue DEMO-1</span>
-    <span class="flow-arrow">&rarr;</span>
-    <span class="flow-desc" data-en="Runs 3 gates, posts evidence, moves to Done" data-es="Corre 3 gates, posta evidencia, mueve a Done">Runs 3 gates, posts evidence, moves to Done</span>
+
+  <!-- Flow 3 -->
+  <div class="diagram-flow">
+    <div class="d-node d-node-accent">
+      <strong>/close-issue</strong>
+      <div class="d-label">DEMO-1</div>
+    </div>
+    <span class="d-arrow">&rarr;</span>
+    <div class="d-node"><span data-en="3 gates" data-es="3 gates">3 gates</span></div>
+    <span class="d-arrow">&rarr;</span>
+    <div class="d-node"><span data-en="Evidence" data-es="Evidencia">Evidence</span></div>
+    <span class="d-arrow">&rarr;</span>
+    <div class="d-node d-node-green">Done</div>
   </div>
 </section>
 
@@ -193,37 +430,56 @@
 <!-- ── Slide 6: The System ── -->
 <section>
   <h2 data-en="System Components" data-es="Componentes del Sistema">System Components</h2>
-  <table>
-    <thead>
-      <tr>
-        <th data-en="Component" data-es="Componente">Component</th>
-        <th data-en="Who uses it" data-es="Qui&eacute;n lo usa">Who uses it</th>
-        <th data-en="What it does" data-es="Qu&eacute; hace">What it does</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="green">Skills</td>
-        <td data-en="YOU invoke them" data-es="T&Uacute; los invocas">YOU invoke them</td>
-        <td data-en="Executes recipes that call the harness" data-es="Ejecuta recetas que llaman al harness">Executes recipes that call the harness</td>
-      </tr>
-      <tr>
-        <td class="yellow">Harness</td>
-        <td data-en="Skills or hooks" data-es="Skills o hooks">Skills or hooks</td>
-        <td data-en="Verifies rules, runs validations" data-es="Verifica reglas, ejecuta validaciones">Verifies rules, runs validations</td>
-      </tr>
-      <tr>
-        <td class="red">Hooks</td>
-        <td data-en="Activate AUTOMATICALLY" data-es="Se activan AUTOM&Aacute;TICAMENTE">Activate AUTOMATICALLY</td>
-        <td data-en="Execute harness scripts on git events" data-es="Ejecutan scripts del harness en eventos de git">Execute harness scripts on git events</td>
-      </tr>
-      <tr>
-        <td class="purple">CLAUDE.md</td>
-        <td data-en="Agent reads it" data-es="El agente lo lee">Agent reads it</td>
-        <td data-en="Defines the rules everything respects" data-es="Define las reglas que todo respeta">Defines the rules everything respects</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="arch-diagram">
+    <!-- You -->
+    <div class="arch-row">
+      <div class="arch-box" style="border-color:#58a6ff;">
+        <strong class="blue" data-en="YOU" data-es="T&Uacute;">YOU</strong>
+        <div class="d-label">/start-issue &middot; /close-issue &middot; /status</div>
+      </div>
+    </div>
+    <div class="d-arrow-down">&darr;</div>
+    <!-- Skills -->
+    <div class="arch-row">
+      <div class="arch-box" style="border-color:#238636; min-width:200px;">
+        <strong class="green">Skills</strong>
+        <div class="d-label" data-en="Intelligent commands" data-es="Comandos inteligentes">Intelligent commands</div>
+      </div>
+      <div class="arch-box" style="border-color:#8957e5;">
+        <strong class="purple">CLAUDE.md</strong>
+        <div class="d-label" data-en="Rules" data-es="Reglas">Rules</div>
+      </div>
+    </div>
+    <div class="d-arrow-down" data-en="&darr; invoke" data-es="&darr; invocan">&darr; invoke</div>
+    <!-- Harness -->
+    <div class="arch-row">
+      <div class="arch-box" style="border-color:#d29922; min-width:350px;">
+        <strong class="yellow">Harness Scripts</strong>
+        <div class="d-label">linear_client.py &middot; close_issue.sh &middot; check_issue_ref.sh</div>
+      </div>
+    </div>
+    <div class="d-arrow-down" data-en="&darr; activate via" data-es="&darr; se activan via">&darr; activate via</div>
+    <!-- Hooks -->
+    <div class="arch-row">
+      <div class="arch-box" style="border-color:#f85149;">
+        <strong class="red">Hooks</strong>
+        <div class="d-label" data-en="Auto triggers" data-es="Triggers autom&aacute;ticos">Auto triggers</div>
+      </div>
+    </div>
+    <div class="d-arrow-down">&darr;</div>
+    <!-- External -->
+    <div class="arch-row">
+      <div class="arch-box" style="border-color:#5e6ad2;">
+        <strong style="color:#5e6ad2;">Linear</strong>
+      </div>
+      <div class="arch-box" style="border-color:#f0f6fc;">
+        <strong>GitHub</strong>
+      </div>
+      <div class="arch-box" style="border-color:#d29922;">
+        <strong class="yellow">CI</strong>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- ── Slide 7: The Analogy ── -->
@@ -244,90 +500,131 @@
 <!-- ── Slide 8: Secret Blocked ── -->
 <section>
   <h2><span data-en="The" data-es="El">The</span> <span class="red">"Wow"</span> <span data-en="Moment" data-es="Momento">Moment</span></h2>
-  <div class="en-block">
-    <pre><code>
-  # Moment 1: The mistake
-  $ git commit -m "add dark mode"
-  <span class="red">BLOCKED</span> — gitleaks detected a secret
-  → Never reached GitHub
+  <div class="secret-flow">
+    <div class="sf-step" style="border-left:3px solid #f85149;">
+      <div class="sf-num">1</div>
+      <div class="sf-content">
+        <code>git commit</code> &mdash; <span data-en="API key in code" data-es="API key en el c&oacute;digo">API key in code</span>
+        <div class="d-label" data-en="gitleaks pre-commit hook scans..." data-es="gitleaks pre-commit hook escanea...">gitleaks pre-commit hook scans...</div>
+      </div>
+      <div class="sf-result red" data-en="BLOCKED" data-es="BLOQUEADO">BLOCKED</div>
+    </div>
+    <div style="text-align:center; font-size:0.6em; color:#8b949e;" data-en="&darr; never reached GitHub" data-es="&darr; nunca lleg&oacute; a GitHub">&darr; never reached GitHub</div>
 
-  # Moment 2: The fix
-  $ mv API_KEY → .env
-  $ git commit -m "add dark mode"
-  <span class="green">PASSED</span>
+    <div class="sf-step" style="border-left:3px solid #238636;">
+      <div class="sf-num">2</div>
+      <div class="sf-content">
+        <span data-en="Move key to" data-es="Mover key a">Move key to</span> <code>.env</code> &rarr; <code>git commit</code>
+        <div class="d-label" data-en="gitleaks scans... clean" data-es="gitleaks escanea... limpio">gitleaks scans... clean</div>
+      </div>
+      <div class="sf-result green" data-en="PASSED" data-es="PAS&Oacute;">PASSED</div>
+    </div>
+    <div style="text-align:center; font-size:0.6em; color:#8b949e;" data-en="&darr; what if someone uses --no-verify?" data-es="&darr; &iquest;qu&eacute; pasa si alguien usa --no-verify?">&darr; what if someone uses --no-verify?</div>
 
-  # Moment 3: Second layer
-  $ --no-verify → GitHub Actions → gitleaks
-  <span class="red">PR BLOCKED</span> + bug auto-created in Linear
-    </code></pre>
-  </div>
-  <div class="es-block" style="display:none;">
-    <pre><code>
-  # Momento 1: El error
-  $ git commit -m "add dark mode"
-  <span class="red">BLOQUEADO</span> — gitleaks detect&oacute; un secret
-  → Nunca lleg&oacute; a GitHub
-
-  # Momento 2: La correcci&oacute;n
-  $ mv API_KEY → .env
-  $ git commit -m "add dark mode"
-  <span class="green">PAS&Oacute;</span>
-
-  # Momento 3: Segunda capa
-  $ --no-verify → GitHub Actions → gitleaks
-  <span class="red">PR BLOQUEADO</span> + bug auto-creado en Linear
-    </code></pre>
+    <div class="sf-step" style="border-left:3px solid #f85149;">
+      <div class="sf-num">3</div>
+      <div class="sf-content">
+        <span data-en="GitHub Actions runs gitleaks again" data-es="GitHub Actions corre gitleaks de nuevo">GitHub Actions runs gitleaks again</span>
+        <div class="d-label" data-en="Second layer catches it + auto-creates bug in Linear" data-es="La segunda capa lo atrapa + auto-crea bug en Linear">Second layer catches it + auto-creates bug in Linear</div>
+      </div>
+      <div class="sf-result red" data-en="PR BLOCKED" data-es="PR BLOQUEADO">PR BLOCKED</div>
+    </div>
   </div>
 </section>
 
 <!-- ── Slide 9: Gate System ── -->
 <section>
   <h2 data-en="Gate System" data-es="Sistema de Gates">Gate System</h2>
-  <div class="en-block">
-    <pre><code>
-  /close-issue DEMO-1
-
-  Gate 1/3 — Tests passing?    → npm test       → <span class="green">PASS</span>
-  Gate 2/3 — CI green?         → gh run list    → <span class="green">PASS</span>
-  Gate 3/3 — Criteria checked? → Linear API     → <span class="green">PASS</span>
-
-  ════════════════════════════════════════
-  <span class="green">ALL GATES PASSED (3/3)</span>
-  Evidence posted. Issue moved to Done.
-    </code></pre>
+  <p class="muted" style="font-size:0.7em; margin-bottom:0.8em;"><code>/close-issue DEMO-1</code></p>
+  <div class="gate-visual">
+    <div class="gate-row">
+      <div class="gate-icon gate-icon-pass">&#10003;</div>
+      <div class="gate-bar">
+        <span><strong>Gate 1/3</strong> &mdash; <span data-en="Tests passing?" data-es="&iquest;Tests pasan?">Tests passing?</span></span>
+        <span><code>npm test</code> &rarr; <span class="gate-result green">PASS</span></span>
+      </div>
+    </div>
+    <div class="gate-row">
+      <div class="gate-icon gate-icon-pass">&#10003;</div>
+      <div class="gate-bar">
+        <span><strong>Gate 2/3</strong> &mdash; <span data-en="CI green?" data-es="&iquest;CI green?">CI green?</span></span>
+        <span><code>gh run list</code> &rarr; <span class="gate-result green">PASS</span></span>
+      </div>
+    </div>
+    <div class="gate-row">
+      <div class="gate-icon gate-icon-pass">&#10003;</div>
+      <div class="gate-bar">
+        <span><strong>Gate 3/3</strong> &mdash; <span data-en="Criteria checked?" data-es="&iquest;Criterios completos?">Criteria checked?</span></span>
+        <span><code>Linear API</code> &rarr; <span class="gate-result green">PASS</span></span>
+      </div>
+    </div>
   </div>
-  <div class="es-block" style="display:none;">
-    <pre><code>
-  /close-issue DEMO-1
-
-  Gate 1/3 — &iquest;Tests pasan?         → npm test       → <span class="green">PASS</span>
-  Gate 2/3 — &iquest;CI green?            → gh run list    → <span class="green">PASS</span>
-  Gate 3/3 — &iquest;Criterios checkeados? → Linear API    → <span class="green">PASS</span>
-
-  ════════════════════════════════════════
-  <span class="green">TODOS LOS GATES PASARON (3/3)</span>
-  Evidencia posteada. Issue movido a Done.
-    </code></pre>
+  <div style="margin-top:0.8em; text-align:center;">
+    <div class="diagram-flow" style="justify-content:center;">
+      <div class="d-node d-node-green" style="min-width:140px;">
+        <strong class="green" data-en="ALL PASSED (3/3)" data-es="TODOS PASARON (3/3)">ALL PASSED (3/3)</strong>
+      </div>
+      <span class="d-arrow">&rarr;</span>
+      <div class="d-node" style="min-width:100px;">
+        <span data-en="Post evidence" data-es="Posta evidencia">Post evidence</span>
+      </div>
+      <span class="d-arrow">&rarr;</span>
+      <div class="d-node d-node-green" style="min-width:80px;">
+        <strong class="green">Done</strong>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- ── Slide 10: Before/After ── -->
 <section>
   <h2 data-en="Before vs After" data-es="Antes vs Despu&eacute;s">Before vs After</h2>
-  <div style="display:flex; gap:2em; justify-content:center; font-size:0.8em;">
-    <div style="text-align:left;">
+  <div class="comparison">
+    <div class="comparison-col" style="border-top:3px solid #f85149;">
       <h3 class="red" data-en="Without Harness" data-es="Sin Harness">Without Harness</h3>
-      <p data-en="10 manual steps" data-es="10 pasos manuales">10 manual steps</p>
-      <p data-en="0 verifications" data-es="0 verificaciones">0 verifications</p>
-      <p data-en="0 evidence" data-es="0 evidencia">0 evidence</p>
-      <p data-en="0 audit trail" data-es="0 audit trail">0 audit trail</p>
+      <div class="comp-item">
+        <div class="comp-icon comp-icon-red">&times;</div>
+        <span data-en="10 manual steps" data-es="10 pasos manuales">10 manual steps</span>
+      </div>
+      <div class="comp-item">
+        <div class="comp-icon comp-icon-red">&times;</div>
+        <span data-en="0 automatic verifications" data-es="0 verificaciones autom&aacute;ticas">0 automatic verifications</span>
+      </div>
+      <div class="comp-item">
+        <div class="comp-icon comp-icon-red">&times;</div>
+        <span data-en="0 evidence" data-es="0 evidencia">0 evidence</span>
+      </div>
+      <div class="comp-item">
+        <div class="comp-icon comp-icon-red">&times;</div>
+        <span data-en="0 audit trail" data-es="0 audit trail">0 audit trail</span>
+      </div>
+      <div class="comp-item">
+        <div class="comp-icon comp-icon-red">&times;</div>
+        <span data-en="Secrets can leak" data-es="Secrets pueden filtrarse">Secrets can leak</span>
+      </div>
     </div>
-    <div style="text-align:left;">
+    <div class="comparison-col" style="border-top:3px solid #238636;">
       <h3 class="green" data-en="With Harness" data-es="Con Harness">With Harness</h3>
-      <p data-en="3 commands" data-es="3 comandos">3 commands</p>
-      <p data-en="5+ automatic verifications" data-es="5+ verificaciones autom&aacute;ticas">5+ automatic verifications</p>
-      <p data-en="Evidence on every close" data-es="Evidencia en cada cierre">Evidence on every close</p>
-      <p data-en="Full audit trail" data-es="Audit trail completo">Full audit trail</p>
+      <div class="comp-item">
+        <div class="comp-icon comp-icon-green">&#10003;</div>
+        <span data-en="3 commands" data-es="3 comandos">3 commands</span>
+      </div>
+      <div class="comp-item">
+        <div class="comp-icon comp-icon-green">&#10003;</div>
+        <span data-en="5+ automatic verifications" data-es="5+ verificaciones autom&aacute;ticas">5+ automatic verifications</span>
+      </div>
+      <div class="comp-item">
+        <div class="comp-icon comp-icon-green">&#10003;</div>
+        <span data-en="Evidence on every close" data-es="Evidencia en cada cierre">Evidence on every close</span>
+      </div>
+      <div class="comp-item">
+        <div class="comp-icon comp-icon-green">&#10003;</div>
+        <span data-en="Full audit trail" data-es="Audit trail completo">Full audit trail</span>
+      </div>
+      <div class="comp-item">
+        <div class="comp-icon comp-icon-green">&#10003;</div>
+        <span data-en="Secrets blocked at commit" data-es="Secrets bloqueados en commit">Secrets blocked at commit</span>
+      </div>
     </div>
   </div>
 </section>
