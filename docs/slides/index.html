@@ -41,9 +41,14 @@
       margin: 0.4em 0;
       text-align: left;
       font-size: 0.75em;
+      display: flex;
+      align-items: baseline;
+      gap: 0.5em;
     }
 
-    .layer-box strong { display: inline-block; width: 2em; }
+    .layer-num { flex-shrink: 0; width: 1.5em; font-weight: 700; }
+    .layer-name { flex-shrink: 0; white-space: nowrap; font-weight: 700; }
+    .layer-desc { color: #8b949e; }
 
     .flow-row {
       display: flex;
@@ -164,16 +169,24 @@
 <section>
   <h2 data-en="4 Layers of Enforcement" data-es="4 Capas de Enforcement">4 Layers of Enforcement</h2>
   <div class="layer-box" style="border-left:4px solid #238636;">
-    <strong class="green">1</strong> <strong>Pre-commit</strong> <span class="muted" data-en="&mdash; gitleaks + issue-ref hook &mdash; &quot;Won't let you commit bad code&quot;" data-es="&mdash; gitleaks + issue-ref hook &mdash; &quot;No te deja commitear mal&quot;">&mdash; gitleaks + issue-ref hook &mdash; "Won't let you commit bad code"</span>
+    <span class="layer-num green">1</span>
+    <span class="layer-name">Pre-commit</span>
+    <span class="layer-desc" data-en="gitleaks + issue-ref hook &mdash; &quot;Won't let you commit bad code&quot;" data-es="gitleaks + issue-ref hook &mdash; &quot;No te deja commitear mal&quot;">gitleaks + issue-ref hook &mdash; "Won't let you commit bad code"</span>
   </div>
   <div class="layer-box" style="border-left:4px solid #d29922;">
-    <strong class="yellow">2</strong> <strong>CI</strong> <span class="muted" data-en="&mdash; Tests + gitleaks &mdash; &quot;If it fails, auto-creates bug in Linear&quot;" data-es="&mdash; Tests + gitleaks &mdash; &quot;Si falla, auto-crea bug en Linear&quot;">&mdash; Tests + gitleaks &mdash; "If it fails, auto-creates bug in Linear"</span>
+    <span class="layer-num yellow">2</span>
+    <span class="layer-name">CI</span>
+    <span class="layer-desc" data-en="Tests + gitleaks &mdash; &quot;If it fails, auto-creates bug in Linear&quot;" data-es="Tests + gitleaks &mdash; &quot;Si falla, auto-crea bug en Linear&quot;">Tests + gitleaks &mdash; "If it fails, auto-creates bug in Linear"</span>
   </div>
   <div class="layer-box" style="border-left:4px solid #58a6ff;">
-    <strong class="blue">3</strong> <strong>Harness</strong> <span class="muted" data-en="&mdash; close_issue.sh with 3 gates &mdash; &quot;Won't let you close without evidence&quot;" data-es="&mdash; close_issue.sh con 3 gates &mdash; &quot;No te deja cerrar sin evidencia&quot;">&mdash; close_issue.sh with 3 gates &mdash; "Won't let you close without evidence"</span>
+    <span class="layer-num blue">3</span>
+    <span class="layer-name">Harness</span>
+    <span class="layer-desc" data-en="close_issue.sh with 3 gates &mdash; &quot;Won't let you close without evidence&quot;" data-es="close_issue.sh con 3 gates &mdash; &quot;No te deja cerrar sin evidencia&quot;">close_issue.sh with 3 gates &mdash; "Won't let you close without evidence"</span>
   </div>
   <div class="layer-box" style="border-left:4px solid #8957e5;">
-    <strong class="purple">4</strong> <strong>Webhook</strong> <span class="muted" data-en="&mdash; PR &rarr; In Progress, merge &rarr; Done &mdash; &quot;Status syncs automatically&quot;" data-es="&mdash; PR &rarr; In Progress, merge &rarr; Done &mdash; &quot;El estado se sincroniza solo&quot;">&mdash; PR &rarr; In Progress, merge &rarr; Done &mdash; "Status syncs automatically"</span>
+    <span class="layer-num purple">4</span>
+    <span class="layer-name">Webhook</span>
+    <span class="layer-desc" data-en="PR &rarr; In Progress, merge &rarr; Done &mdash; &quot;Status syncs automatically&quot;" data-es="PR &rarr; In Progress, merge &rarr; Done &mdash; &quot;El estado se sincroniza solo&quot;">PR &rarr; In Progress, merge &rarr; Done &mdash; "Status syncs automatically"</span>
   </div>
 </section>
 
