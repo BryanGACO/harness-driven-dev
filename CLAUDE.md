@@ -11,10 +11,11 @@ through automated enforcement.
 
 ## Skills
 
-The agent has 3 skills that connect with the harness:
+The agent has 4 skills that connect with the harness:
 
 | Skill | When to use |
 |-------|-------------|
+| `/create-issue <title>` | Create a new issue in Linear with acceptance criteria. |
 | `/start-issue DEMO-X` | ALWAYS before writing code. Reads Linear issue, creates branch, moves to In Progress. |
 | `/close-issue DEMO-X` | ALWAYS to finish work. Runs 3 gates (tests + CI + criteria), posts evidence, moves to Done. |
 | `/status` | Check project dashboard: issues, branch, CI status. |

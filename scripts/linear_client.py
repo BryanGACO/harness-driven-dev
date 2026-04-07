@@ -5,6 +5,7 @@ Uses only stdlib (no pip dependencies).
 
 Usage:
   python scripts/linear_client.py get DEMO-1
+  python scripts/linear_client.py create "Title" ["Description"]
   python scripts/linear_client.py move DEMO-1 "In Progress"
   python scripts/linear_client.py comment DEMO-1 "Evidence message"
   python scripts/linear_client.py list [--state "In Progress"]
@@ -144,6 +145,57 @@ def list_issues(team_key="DEMO", state=None):
     return result.get("data", {}).get("issueSearch", {}).get("nodes", [])
 
 
+def _get_team_id(team_key="DEMO"):
+    """Get team ID from team key."""
+    result = _query("""
+        query($key: String!) {
+            teams(filter: { key: { eq: $key } }) {
+                nodes { id name key }
+            }
+        }
+    """, {"key": team_key})
+    teams = result.get("data", {}).get("teams", {}).get("nodes", [])
+    if not teams:
+        print(f"Team '{team_key}' not found.", file=sys.stderr)
+        return None
+    return teams[0]["id"]
+
+
+def create_issue(title, description=None, team_key="DEMO"):
+    """Create a new issue in Linear. Returns the issue dict or None."""
+    team_id = _get_team_id(team_key)
+    if not team_id:
+        return None
+
+    variables = {
+        "title": title,
+        "teamId": team_id,
+    }
+
+    # Build input fields
+    input_fields = "title: $title, teamId: $teamId"
+    var_defs = "$title: String!, $teamId: String!"
+
+    if description:
+        variables["description"] = description
+        input_fields += ", description: $description"
+        var_defs += ", $description: String"
+
+    result = _query(f"""
+        mutation({var_defs}) {{
+            issueCreate(input: {{ {input_fields} }}) {{
+                success
+                issue {{ id identifier title url }}
+            }}
+        }}
+    """, variables)
+
+    issue_data = result.get("data", {}).get("issueCreate", {})
+    if issue_data.get("success"):
+        return issue_data.get("issue")
+    return None
+
+
 # ── CLI ──
 
 def _print_issue(issue):
@@ -173,6 +225,21 @@ def main():
             _print_issue(issue)
         else:
             print(f"Issue {sys.argv[2]} not found.")
+            sys.exit(1)
+
+    elif cmd == "create":
+        if len(sys.argv) < 3:
+            print('Usage: linear_client.py create "<TITLE>" ["<DESCRIPTION>"]')
+            sys.exit(1)
+        title = sys.argv[2]
+        description = sys.argv[3] if len(sys.argv) > 3 else None
+        team_key = os.environ.get("LINEAR_TEAM_KEY", "DEMO")
+        issue = create_issue(title, description, team_key)
+        if issue:
+            print(f"Created: {issue['identifier']}  {issue['title']}")
+            print(f"  URL: {issue.get('url', 'N/A')}")
+        else:
+            print("Failed to create issue.")
             sys.exit(1)
 
     elif cmd == "move":
