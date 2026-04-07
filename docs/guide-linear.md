@@ -50,9 +50,46 @@ Projects group related issues. For the demo:
    - **Status**: Active
 4. Click **Create**
 
-## 5. Create Demo Issues
+## 5. Create an API Key
 
-You can create issues directly from Claude Code using the `/create-issue` skill, or via the CLI script.
+The API key allows the harness scripts to interact with Linear. **You need this before creating issues via CLI or Claude Code.**
+
+1. Click your **avatar** (bottom-left) → **Settings**
+2. Go to **API** in the left sidebar
+3. Under **Personal API keys**, click **Create key**
+4. Give it a name: `harness-driven-dev`
+5. Click **Create**
+6. **Copy the key immediately** — it starts with `lin_api_` and won't be shown again
+
+## 6. Save the API Key
+
+### Locally (for development and demo)
+
+```bash
+# Copy the example file
+cp .env.example .env
+
+# Edit .env and paste your key
+# LINEAR_API_KEY=lin_api_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+### In GitHub (for CI — the Linear Bridge workflow)
+
+```bash
+# This will prompt you to paste the key
+gh secret set LINEAR_API_KEY
+```
+
+Or manually:
+1. Go to your repo on GitHub → **Settings** → **Secrets and variables** → **Actions**
+2. Click **New repository secret**
+3. Name: `LINEAR_API_KEY`
+4. Value: paste your `lin_api_...` key
+5. Click **Add secret**
+
+## 7. Create Demo Issues
+
+Now that you have the API key configured, you can create issues directly from Claude Code, via CLI, or manually.
 
 ### Option A: From Claude Code (recommended)
 
@@ -95,43 +132,6 @@ python3 scripts/linear_client.py create "Add drag and drop between columns" \
 3. Create each issue with a title and description
 
 > **Important**: Always include `## Acceptance Criteria` with `- [ ]` checkboxes. The harness gate 3 checks these boxes to verify Definition of Done.
-
-## 6. Create an API Key
-
-The API key allows the harness scripts to interact with Linear.
-
-1. Click your **avatar** (bottom-left) → **Settings**
-2. Go to **API** in the left sidebar
-3. Under **Personal API keys**, click **Create key**
-4. Give it a name: `harness-driven-dev`
-5. Click **Create**
-6. **Copy the key immediately** — it starts with `lin_api_` and won't be shown again
-
-## 7. Save the API Key
-
-### Locally (for development and demo)
-
-```bash
-# Copy the example file
-cp .env.example .env
-
-# Edit .env and paste your key
-# LINEAR_API_KEY=lin_api_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-```
-
-### In GitHub (for CI — the Linear Bridge workflow)
-
-```bash
-# This will prompt you to paste the key
-gh secret set LINEAR_API_KEY
-```
-
-Or manually:
-1. Go to your repo on GitHub → **Settings** → **Secrets and variables** → **Actions**
-2. Click **New repository secret**
-3. Name: `LINEAR_API_KEY`
-4. Value: paste your `lin_api_...` key
-5. Click **Add secret**
 
 ## 8. Connect Linear with GitHub
 
