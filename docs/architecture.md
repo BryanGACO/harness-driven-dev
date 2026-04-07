@@ -8,7 +8,7 @@ Harness-Driven Development connects 4 components into an enforcement system.
 
 ```mermaid
 graph TD
-    YOU["You (the human)"] -->|"/start-issue, /close-issue, /status"| SKILLS
+    YOU["You (the human)"] -->|"/create-issue, /start-issue, /close-issue, /status"| SKILLS
     
     subgraph Agent["Claude Code Agent"]
         CLAUDE_MD["CLAUDE.md<br/><i>Rules + context</i>"] -.->|"guides behavior"| SKILLS
@@ -37,7 +37,7 @@ graph TD
 
 | Component | Who uses it | When it activates | What it does |
 |-----------|------------|-------------------|-------------|
-| **Skills** (recipes) | YOU invoke them | `/start-issue`, `/close-issue`, `/status` | Executes a recipe that calls the harness |
+| **Skills** (recipes) | YOU invoke them | `/create-issue`, `/start-issue`, `/close-issue`, `/status` | Executes a recipe that calls the harness |
 | **Harness** (scripts) | Skills invoke them, or hooks trigger them | When a skill needs it, or a hook fires | Verifies rules and runs validations |
 | **Hooks** (triggers) | Activate AUTOMATICALLY | `git commit`, CI failure | Execute harness scripts automatically |
 | **CLAUDE.md** (rules) | Agent reads at session start | Always — permanent context | Defines the rules everything respects |
@@ -52,6 +52,7 @@ Think of a restaurant:
 
   SKILLS     = The menu recipes
                The chef (agent) knows how to execute them
+               "/create-issue" = "take the order"
                "/start-issue" = "prepare the order"
                "/close-issue" = "serve the plate"
 

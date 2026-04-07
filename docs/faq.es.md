@@ -14,7 +14,7 @@ CI es una capa. HDD agrega 3 más: pre-commit hooks (enforcement local), harness
 
 ### ¿Es solo para desarrollo asistido por IA?
 
-No. Los hooks y scripts de CI funcionan sin el agente IA. El agente agrega la capa de skills (los comandos `/start-issue`, `/close-issue`, `/status`) que orquesta el flujo completo, pero el enforcement funciona independientemente.
+No. Los hooks y scripts de CI funcionan sin el agente IA. El agente agrega la capa de skills (los comandos `/create-issue`, `/start-issue`, `/close-issue`, `/status`) que orquesta el flujo completo, pero el enforcement funciona independientemente.
 
 ## Setup
 

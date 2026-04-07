@@ -52,19 +52,49 @@ Projects group related issues. For the demo:
 
 ## 5. Create Demo Issues
 
-Create 3 issues for the demo:
+You can create issues directly from Claude Code using the `/create-issue` skill, or via the CLI script.
+
+### Option A: From Claude Code (recommended)
+
+Start Claude Code in the project directory and ask:
+
+```
+/create-issue Add dark mode toggle
+/create-issue Add task counter per column
+/create-issue Add drag and drop between columns
+```
+
+The agent will create each issue in Linear with acceptance criteria automatically.
+
+### Option B: Via CLI script
+
+```bash
+source .venv/bin/activate
+
+python3 scripts/linear_client.py create "Add dark mode toggle" \
+  "## Acceptance Criteria
+- [ ] Toggle button visible
+- [ ] Dark/light styles applied
+- [ ] Preference saved in localStorage"
+
+python3 scripts/linear_client.py create "Add task counter per column" \
+  "## Acceptance Criteria
+- [ ] Counter shows in column header
+- [ ] Updates on add/move/delete"
+
+python3 scripts/linear_client.py create "Add drag and drop between columns" \
+  "## Acceptance Criteria
+- [ ] Tasks draggable between columns
+- [ ] State updates on drop"
+```
+
+### Option C: Manually in Linear
 
 1. Go to your team view in Linear
 2. Click **+ Create issue** (or press `C`)
-3. Create each issue:
+3. Create each issue with a title and description
 
-| Issue | Title | Description |
-|-------|-------|-------------|
-| DEMO-1 | Add dark mode toggle | `## Acceptance Criteria`<br>`- [ ] Toggle button visible`<br>`- [ ] Dark/light styles applied`<br>`- [ ] Preference saved in localStorage` |
-| DEMO-2 | Add task counter per column | `## Acceptance Criteria`<br>`- [ ] Counter shows in column header`<br>`- [ ] Updates on add/move/delete` |
-| DEMO-3 | Add drag and drop | `## Acceptance Criteria`<br>`- [ ] Tasks draggable between columns`<br>`- [ ] State updates on drop` |
-
-> **Tip**: Include `## Acceptance Criteria` with `- [ ]` checkboxes. The harness gate 3 checks these boxes to verify Definition of Done.
+> **Important**: Always include `## Acceptance Criteria` with `- [ ]` checkboxes. The harness gate 3 checks these boxes to verify Definition of Done.
 
 ## 6. Create an API Key
 

@@ -137,8 +137,9 @@ cd harness-driven-dev
 claude
 ```
 
-El agente leerá `CLAUDE.md` y tendrá acceso a 3 skills:
+El agente leerá `CLAUDE.md` y tendrá acceso a 4 skills:
 
+- `/create-issue <título>` — Crear un nuevo issue en Linear con criterios de aceptación
 - `/start-issue DEMO-X` — Iniciar trabajo en un issue
 - `/close-issue DEMO-X` — Cerrar con evidencia
 - `/status` — Dashboard del proyecto

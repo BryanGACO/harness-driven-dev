@@ -52,19 +52,49 @@ Los proyectos agrupan issues relacionados. Para el demo:
 
 ## 5. Crear los Issues del Demo
 
-Crea 3 issues para el demo:
+Puedes crear issues directamente desde Claude Code usando el skill `/create-issue`, o vía el script CLI.
+
+### Opción A: Desde Claude Code (recomendado)
+
+Inicia Claude Code en el directorio del proyecto y pide:
+
+```
+/create-issue Add dark mode toggle
+/create-issue Add task counter per column
+/create-issue Add drag and drop between columns
+```
+
+El agente creará cada issue en Linear con criterios de aceptación automáticamente.
+
+### Opción B: Vía script CLI
+
+```bash
+source .venv/bin/activate
+
+python3 scripts/linear_client.py create "Add dark mode toggle" \
+  "## Acceptance Criteria
+- [ ] Toggle button visible
+- [ ] Dark/light styles applied
+- [ ] Preference saved in localStorage"
+
+python3 scripts/linear_client.py create "Add task counter per column" \
+  "## Acceptance Criteria
+- [ ] Counter shows in column header
+- [ ] Updates on add/move/delete"
+
+python3 scripts/linear_client.py create "Add drag and drop between columns" \
+  "## Acceptance Criteria
+- [ ] Tasks draggable between columns
+- [ ] State updates on drop"
+```
+
+### Opción C: Manualmente en Linear
 
 1. Ve a la vista de tu team en Linear
 2. Click en **+ Create issue** (o presiona `C`)
-3. Crea cada issue:
+3. Crea cada issue con título y descripción
 
-| Issue | Título | Descripción |
-|-------|--------|-------------|
-| DEMO-1 | Add dark mode toggle | `## Acceptance Criteria`<br>`- [ ] Toggle button visible`<br>`- [ ] Dark/light styles applied`<br>`- [ ] Preference saved in localStorage` |
-| DEMO-2 | Add task counter per column | `## Acceptance Criteria`<br>`- [ ] Counter shows in column header`<br>`- [ ] Updates on add/move/delete` |
-| DEMO-3 | Add drag and drop | `## Acceptance Criteria`<br>`- [ ] Tasks draggable between columns`<br>`- [ ] State updates on drop` |
-
-> **Tip**: Incluye `## Acceptance Criteria` con checkboxes `- [ ]`. El gate 3 del harness revisa estos checkboxes para verificar el Definition of Done.
+> **Importante**: Siempre incluye `## Acceptance Criteria` con checkboxes `- [ ]`. El gate 3 del harness revisa estos checkboxes para verificar el Definition of Done.
 
 ## 6. Crear una API Key
 

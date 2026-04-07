@@ -14,7 +14,7 @@ CI is one layer. HDD adds 3 more: pre-commit hooks (local enforcement), harness 
 
 ### Is this only for AI-assisted development?
 
-No. The hooks and CI scripts work without the AI agent. The agent adds the skill layer (the `/start-issue`, `/close-issue`, `/status` commands) that orchestrates the full flow, but the enforcement works independently.
+No. The hooks and CI scripts work without the AI agent. The agent adds the skill layer (the `/create-issue`, `/start-issue`, `/close-issue`, `/status` commands) that orchestrates the full flow, but the enforcement works independently.
 
 ## Setup
 

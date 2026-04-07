@@ -137,8 +137,9 @@ cd harness-driven-dev
 claude
 ```
 
-The agent will read `CLAUDE.md` and have access to 3 skills:
+The agent will read `CLAUDE.md` and have access to 4 skills:
 
+- `/create-issue <title>` — Create a new issue in Linear with acceptance criteria
 - `/start-issue DEMO-X` — Start work on an issue
 - `/close-issue DEMO-X` — Close with evidence
 - `/status` — Project dashboard
