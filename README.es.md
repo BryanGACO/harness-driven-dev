@@ -31,7 +31,7 @@ Harness-Driven Development (HDD) conecta tres sistemas en un flujo automatizado:
 Linear (planeación) → GitHub (código) → Agente IA (enforcement)
 ```
 
-El agente no solo escribe código — **se auto-enforcea las reglas** que tu equipo ya conoce pero no logra cumplir consistentemente.
+El agente no solo escribe código — **hace cumplir automáticamente las reglas** que tu equipo ya conoce pero no logra cumplir consistentemente.
 
 ## Cómo Funciona
 
@@ -112,7 +112,7 @@ Consulta la [Guía de Setup](docs/setup-guide.md) completa para integración con
 
 Un Kanban board de 1 página (To Do → In Progress → Done) construido con HTML/CSS/JS vanilla. Sin frameworks, sin backend — justo lo necesario para demostrar el harness en acción.
 
-Cada feature es un issue de Linear. El harness enforcea el ciclo de vida completo:
+Cada feature es un issue de Linear. El harness hace cumplir el ciclo de vida completo:
 
 1. **Inicio** → `/start-issue DEMO-1` crea branch + mueve issue
 2. **Código** → El agente implementa, los hooks validan cada commit

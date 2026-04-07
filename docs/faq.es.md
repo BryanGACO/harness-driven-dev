@@ -6,7 +6,7 @@
 
 ### ¿Qué es Harness-Driven Development?
 
-Un enfoque donde un agente IA enforcea mecánicamente las buenas prácticas de software a través de scripts, hooks y gates — no a través de confianza o acuerdos sociales.
+Un enfoque donde un agente IA hace cumplir mecánicamente las buenas prácticas de software a través de scripts, hooks y gates — no a través de confianza o acuerdos sociales.
 
 ### ¿Por qué no solo usar CI/CD?
 

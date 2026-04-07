@@ -176,7 +176,7 @@ Tipos: `feat`, `fix`, `docs`, `test`, `chore`, `refactor`
 | `Fixes DEMO-XXX` | Nunca | Igual que Closes |
 | `Resolves DEMO-XXX` | Nunca | Igual que Closes |
 
-El hook `check_issue_ref.sh` enforcea esto automáticamente.
+El hook `check_issue_ref.sh` hace cumplir esto automáticamente.
 
 ## Cómo Funcionan los Hooks Juntos
 
