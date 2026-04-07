@@ -82,20 +82,35 @@ def create_ci_bug(run_id, failed_jobs, branch):
         )
         print(f"Updated existing issue {issue_id}")
     else:
+        # Get team ID dynamically
+        team_key = os.environ.get("LINEAR_TEAM_KEY", "DEMO")
+        team_result = _query("""
+            query($key: String!) {
+                teams(filter: { key: { eq: $key } }) {
+                    nodes { id name }
+                }
+            }
+        """, {"key": team_key})
+        teams = team_result.get("data", {}).get("teams", {}).get("nodes", [])
+        if not teams:
+            print(f"Team '{team_key}' not found in Linear. Set LINEAR_TEAM_KEY env var.", file=sys.stderr)
+            sys.exit(1)
+        team_id = teams[0]["id"]
+
         # Create new bug issue
         _query("""
-            mutation($title: String!, $description: String!) {
+            mutation($title: String!, $description: String!, $teamId: String!) {
                 issueCreate(input: {
                     title: $title
                     description: $description
-                    teamId: "REPLACE_WITH_TEAM_ID"
+                    teamId: $teamId
                     priority: 1
                 }) {
                     success
                     issue { identifier url }
                 }
             }
-        """, {"title": title, "description": description})
+        """, {"title": title, "description": description, "teamId": team_id})
         print(f"Created new CI bridge issue: {title}")
 
 

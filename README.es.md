@@ -7,7 +7,7 @@
 
 > Las buenas prácticas de software no fallan por falta de conocimiento — fallan por falta de enforcement. Un agente IA con harness cierra ese gap.
 
-[English](README.md) · [Guía de Setup](docs/setup-guide.md) · [Arquitectura](docs/architecture.md) · [FAQ](docs/faq.md) · [Sitio Web](https://felirangelp.github.io/harness-driven-dev/)
+[English](README.md) · [Guía de Setup](docs/setup-guide.md) · [Guía Linear](docs/guide-linear.es.md) · [Guía GitHub](docs/guide-github.es.md) · [Arquitectura](docs/architecture.md) · [FAQ](docs/faq.md) · [Sitio Web](https://felirangelp.github.io/harness-driven-dev/)
 
 ---
 

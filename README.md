@@ -7,7 +7,7 @@
 
 > Software best practices don't fail because teams don't know them — they fail because nobody enforces them. An AI agent with a harness closes that gap.
 
-[Español](README.es.md) · [Setup Guide](docs/setup-guide.md) · [Architecture](docs/architecture.md) · [FAQ](docs/faq.md) · [Live Site](https://felirangelp.github.io/harness-driven-dev/)
+[Español](README.es.md) · [Setup Guide](docs/setup-guide.md) · [Linear Guide](docs/guide-linear.md) · [GitHub Guide](docs/guide-github.md) · [Architecture](docs/architecture.md) · [FAQ](docs/faq.md) · [Live Site](https://felirangelp.github.io/harness-driven-dev/)
 
 ---
 
