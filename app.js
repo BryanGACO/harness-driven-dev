@@ -142,12 +142,6 @@
     render();
   }
 
-  function clearCompleted() {
-    tasks = tasks.filter(function (t) { return t.status !== "done"; });
-    saveTasks(tasks);
-    render();
-  }
-
   // ── Event listeners ──
 
   document.getElementById("add-task-btn").addEventListener("click", function () {
@@ -218,7 +212,6 @@
     applyTheme(current === "dark" ? "light" : "dark");
   }
 
-  document.getElementById("clear-done-btn").addEventListener("click", clearCompleted);
   document.getElementById("theme-toggle-btn").addEventListener("click", toggleTheme);
   applyTheme(loadTheme());
 
@@ -229,7 +222,6 @@
       addTask: addTask,
       moveTask: moveTask,
       deleteTask: deleteTask,
-      clearCompleted: clearCompleted,
       getTasks: function () { return tasks.slice(); },
       reset: function () {
         tasks = [];
