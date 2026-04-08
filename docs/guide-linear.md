@@ -262,7 +262,7 @@ python3 scripts/linear_client.py get DEMO-1
 
 # Test: move an issue (then move it back)
 python3 scripts/linear_client.py move DEMO-1 "In Progress"
-python3 scripts/linear_client.py move DEMO-1 "Todo"
+python3 scripts/linear_client.py move DEMO-1 "To Do"
 ```
 
 If you get errors:
