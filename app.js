@@ -36,6 +36,16 @@
     var card = document.createElement("div");
     card.className = "task-card";
     card.dataset.id = task.id;
+    card.setAttribute("draggable", "true");
+
+    card.addEventListener("dragstart", function (e) {
+      e.dataTransfer.setData("text/plain", task.id);
+      card.classList.add("dragging");
+    });
+
+    card.addEventListener("dragend", function () {
+      card.classList.remove("dragging");
+    });
 
     var title = document.createElement("span");
     title.className = "task-title";
@@ -137,6 +147,36 @@
       this.value = "";
     }
   });
+
+  // ── Drag and Drop ──
+
+  function setupDropZones() {
+    var lists = document.querySelectorAll(".task-list");
+    lists.forEach(function (list) {
+      list.addEventListener("dragover", function (e) {
+        e.preventDefault();
+        list.closest(".column").classList.add("drag-over");
+      });
+
+      list.addEventListener("dragleave", function (e) {
+        if (!list.contains(e.relatedTarget)) {
+          list.closest(".column").classList.remove("drag-over");
+        }
+      });
+
+      list.addEventListener("drop", function (e) {
+        e.preventDefault();
+        list.closest(".column").classList.remove("drag-over");
+        var taskId = e.dataTransfer.getData("text/plain");
+        var newStatus = list.closest(".column").dataset.status;
+        if (taskId && newStatus) {
+          moveTask(taskId, newStatus);
+        }
+      });
+    });
+  }
+
+  setupDropZones();
 
   // ── Theme Toggle ──
 

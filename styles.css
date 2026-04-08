@@ -158,6 +158,25 @@ header h1 {
   border-radius: 10px;
 }
 
+/* ── Drag and Drop ── */
+
+.task-card[draggable="true"] {
+  cursor: grab;
+}
+
+.task-card[draggable="true"]:active {
+  cursor: grabbing;
+}
+
+.task-card.dragging {
+  opacity: 0.4;
+}
+
+.column.drag-over {
+  border-color: var(--focus-color);
+  background: color-mix(in srgb, var(--focus-color) 5%, var(--bg-card));
+}
+
 /* ── Task cards ── */
 
 .task-list {
