@@ -283,15 +283,18 @@ def create_issue(title, description=None, team_key="DEMO"):
 
 # ── CLI ──
 
-def _print_issue(issue):
+def _print_issue(issue, full=False):
     """Pretty-print an issue."""
     state = issue.get("state", {}).get("name", "?")
     print(f"  {issue['identifier']}  [{state}]  {issue['title']}")
     if issue.get("description"):
-        # Show first 2 lines of description
-        lines = issue["description"].strip().split("\n")[:2]
-        for line in lines:
-            print(f"    {line}")
+        if full:
+            for line in issue["description"].strip().split("\n"):
+                print(f"    {line}")
+        else:
+            lines = issue["description"].strip().split("\n")[:2]
+            for line in lines:
+                print(f"    {line}")
 
 
 def main():
@@ -306,11 +309,12 @@ def main():
 
     if cmd == "get":
         if len(sys.argv) < 3:
-            print("Usage: linear_client.py get <ISSUE_ID>")
+            print("Usage: linear_client.py get <ISSUE_ID> [--full]")
             sys.exit(1)
+        full = "--full" in sys.argv
         issue = get_issue(sys.argv[2])
         if issue:
-            _print_issue(issue)
+            _print_issue(issue, full=full)
         else:
             print(f"Issue {sys.argv[2]} not found.")
             sys.exit(1)

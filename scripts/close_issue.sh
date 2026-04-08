@@ -76,18 +76,24 @@ fi
 # ── Gate 3: Acceptance Criteria ──
 
 echo -n "Gate 3/3 — Acceptance criteria... "
-ISSUE_DATA=$(python3 "$SCRIPT_DIR/linear_client.py" get "$ISSUE_ID" 2>/dev/null || echo "")
+ISSUE_DATA=$(python3 "$SCRIPT_DIR/linear_client.py" get "$ISSUE_ID" --full 2>/dev/null || echo "")
 if [ -z "$ISSUE_DATA" ]; then
     echo -e "${YELLOW}SKIP (could not fetch issue)${NC}"
     GATES_PASSED=$((GATES_PASSED + 1))
 else
-    # Check if description has unchecked boxes
+    # Count checked and unchecked boxes
     UNCHECKED=$(echo "$ISSUE_DATA" | grep -c '\- \[ \]' || true)
-    if [ "$UNCHECKED" -gt 0 ]; then
-        echo -e "${RED}FAIL ($UNCHECKED unchecked criteria)${NC}"
+    CHECKED=$(echo "$ISSUE_DATA" | grep -c '\- \[x\]' || true)
+    TOTAL=$((UNCHECKED + CHECKED))
+
+    if [ "$TOTAL" -eq 0 ]; then
+        echo -e "${YELLOW}SKIP (no checkboxes found in issue description)${NC}"
+        GATES_PASSED=$((GATES_PASSED + 1))
+    elif [ "$UNCHECKED" -gt 0 ]; then
+        echo -e "${RED}FAIL ($UNCHECKED/$TOTAL unchecked criteria)${NC}"
         echo -e "${YELLOW}  Fix: Complete all acceptance criteria checkboxes in Linear.${NC}"
     else
-        echo -e "${GREEN}PASS${NC}"
+        echo -e "${GREEN}PASS ($CHECKED/$TOTAL checked)${NC}"
         GATES_PASSED=$((GATES_PASSED + 1))
     fi
 fi
