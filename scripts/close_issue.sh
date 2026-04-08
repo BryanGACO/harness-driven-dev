@@ -120,11 +120,25 @@ if [ "$GATES_PASSED" -eq "$GATES_TOTAL" ]; then
     COMMIT_DATE=$(git log -1 --format='%ci' 2>/dev/null || echo "unknown")
     COMMIT_MSG=$(git log -1 --format='%s' 2>/dev/null || echo "unknown")
 
-    # Diff stats
-    DIFF_STAT=$(git diff --stat main...HEAD 2>/dev/null || git diff --stat HEAD~1 2>/dev/null || echo "")
+    # Diff stats — try branch diff first, then last commit, then PR files
+    DIFF_STAT=$(git diff --stat main...HEAD 2>/dev/null || echo "")
+    FILES_CHANGED=$(git diff --name-status main...HEAD 2>/dev/null || echo "")
 
-    # Files changed with status (A=added, M=modified, D=deleted)
-    FILES_CHANGED=$(git diff --name-status main...HEAD 2>/dev/null || git diff --name-status HEAD~1 2>/dev/null || echo "")
+    # If on main (post-merge), try last merge commit
+    if [ -z "$DIFF_STAT" ] || [ "$BRANCH" = "main" ]; then
+        MERGE_COMMIT=$(git log -1 --merges --format='%H' 2>/dev/null || echo "")
+        if [ -n "$MERGE_COMMIT" ]; then
+            DIFF_STAT=$(git diff --stat "${MERGE_COMMIT}^...${MERGE_COMMIT}" 2>/dev/null || echo "")
+            FILES_CHANGED=$(git diff --name-status "${MERGE_COMMIT}^...${MERGE_COMMIT}" 2>/dev/null || echo "")
+        fi
+    fi
+
+    # Fallback: last commit
+    if [ -z "$DIFF_STAT" ]; then
+        DIFF_STAT=$(git diff --stat HEAD~1 2>/dev/null || echo "No diff available")
+        FILES_CHANGED=$(git diff --name-status HEAD~1 2>/dev/null || echo "")
+    fi
+
     FILES_COUNT=$(echo "$FILES_CHANGED" | grep -c '.' 2>/dev/null || echo "0")
 
     # Test results
