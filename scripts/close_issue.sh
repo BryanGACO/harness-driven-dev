@@ -81,9 +81,9 @@ if [ -z "$ISSUE_DATA" ]; then
     echo -e "${YELLOW}SKIP (could not fetch issue)${NC}"
     GATES_PASSED=$((GATES_PASSED + 1))
 else
-    # Count checked and unchecked boxes
+    # Count checked and unchecked boxes (Linear uses [X] uppercase)
     UNCHECKED=$(echo "$ISSUE_DATA" | grep -c '\- \[ \]' || true)
-    CHECKED=$(echo "$ISSUE_DATA" | grep -c '\- \[x\]' || true)
+    CHECKED=$(echo "$ISSUE_DATA" | grep -ci '\- \[x\]' || true)
     TOTAL=$((UNCHECKED + CHECKED))
 
     if [ "$TOTAL" -eq 0 ]; then
@@ -159,7 +159,7 @@ if [ "$GATES_PASSED" -eq "$GATES_TOTAL" ]; then
 
     # Acceptance criteria count
     ISSUE_FULL=$(python3 "$SCRIPT_DIR/linear_client.py" get "$ISSUE_ID" --full 2>/dev/null || echo "")
-    AC_CHECKED=$(echo "$ISSUE_FULL" | grep -c '\- \[x\]' || true)
+    AC_CHECKED=$(echo "$ISSUE_FULL" | grep -ci '\- \[x\]' || true)
     AC_TOTAL=$((AC_CHECKED + $(echo "$ISSUE_FULL" | grep -c '\- \[ \]' || true)))
 
     # Build markdown evidence
