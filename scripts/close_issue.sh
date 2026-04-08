@@ -53,7 +53,7 @@ echo -n "Gate 2/3 — CI green... "
 if command -v gh &>/dev/null; then
     BRANCH=$(git branch --show-current 2>/dev/null || echo "")
     if [ -n "$BRANCH" ]; then
-        CI_STATUS=$(gh run list --branch "$BRANCH" --limit 1 --json conclusion --jq '.[0].conclusion' 2>/dev/null || echo "unknown")
+        CI_STATUS=$(gh run list --branch "$BRANCH" --workflow ci.yml --limit 1 --json conclusion --jq '.[0].conclusion' 2>/dev/null || echo "unknown")
         if [ "$CI_STATUS" = "success" ]; then
             echo -e "${GREEN}PASS${NC}"
             GATES_PASSED=$((GATES_PASSED + 1))
