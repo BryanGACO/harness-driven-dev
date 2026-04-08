@@ -163,22 +163,30 @@ python3 scripts/linear_client.py create "Add drag and drop between columns" \
 
 ## 8. Connect Linear with GitHub
 
-This enables automatic status sync (PR → In Progress, merge → Done).
+This enables automatic status sync (PR → In Progress, merge → Done) via webhook.
+
+> **Important — Multiple Linear Workspaces**: Linear's GitHub App can only be installed **once per GitHub account**. If you already have another Linear workspace connected to the same GitHub account (e.g., a work project), you must **uninstall** the app first and reinstall it for this workspace. See [Troubleshooting: Multiple Workspaces](#multiple-linear-workspaces-on-the-same-github-account) at the bottom of this section.
 
 ### Step 8.1: Install the GitHub integration in Linear
 
-1. Go to **Linear → Settings → Integrations** (left sidebar, under Organization)
-2. Find **GitHub** under Essentials
-3. Click **Connect** / **Enable**
-4. Authorize Linear to access your GitHub account
-5. Select the repository: `harness-driven-dev`
+1. Go to **Linear → Settings → Integrations** (left sidebar)
+2. Find **GitHub** → click **Enable**
+3. It will redirect you to GitHub to install the Linear app
+4. Select your GitHub account (e.g., `felirangelp`)
+5. Under **Repository access**, select **Only select repositories**
+6. Choose your repo (e.g., `harness-driven-dev`)
+7. Click **Save** / **Install**
+8. You'll be redirected back to Linear
 
 ### Step 8.2: Connect your personal GitHub account
 
-1. Go to **Linear → Settings → Account → Connected accounts**
-2. Find **GitHub** and click **Connect**
-3. Authorize the connection
-4. This syncs attribution of your commits and PRs
+1. In Linear → **Settings → Integrations → GitHub** (same page)
+2. Find **Personal GitHub account not connected** → click **Connected accounts →**
+3. Click **Connect** next to GitHub
+4. Authorize the connection
+5. This syncs attribution of your commits and PRs
+
+> If "Connected accounts" appears greyed out, complete Step 8.1 first. The personal account connection only works after the workspace integration is enabled.
 
 ### Step 8.3: Configure PR Automations
 
@@ -188,18 +196,52 @@ This enables automatic status sync (PR → In Progress, merge → Done).
 | Event | Action |
 |-------|--------|
 | On draft PR open, move to... | **No action** |
-| On PR or commit open, move to... | **In Progress** |
+| On PR open, move to... | **In Progress** |
 | On PR review request or activity, move to... | **In Review** |
 | On PR ready for merge, move to... | **In Review** |
-| On PR or commit merge, move to... | **Done** |
+| On PR merge, move to... | **Done** |
 
-> **Why these settings?** The harness uses `Refs DEMO-XXX` (not `Closes`) in commits and PR descriptions. The webhook detects the issue identifier in the branch name (`feat/DEMO-1-dark-mode`) and automatically updates the status.
+> **Why these settings?** The harness uses `Refs DEMO-XXX` (not `Closes`) in commits and PR descriptions. The webhook detects the issue identifier in the branch name (e.g., `feat/HAR-5-dark-mode`) and automatically updates the status.
 
-### Step 8.4: Enable additional features
+### Step 8.4: Enable additional features (optional)
 
 In the GitHub integration settings, enable:
 - **View pull requests in Linear** (Alpha) — toggle ON
 - **Pull request notifications** — All activity by people
+
+### Troubleshooting: Multiple Linear Workspaces on the Same GitHub Account
+
+**The problem**: Linear's GitHub App can only be installed once per GitHub account/organization. If you have two Linear workspaces (e.g., `ExpertIA` for work and `Harness Driven Dev` for this demo) using the same GitHub account, you'll get this error:
+
+> *"Error while connecting with GitHub. Unable to connect with GitHub. Make sure you haven't connected another Linear account with this GitHub installation."*
+
+**The solution**: Uninstall the app from the other workspace first, then install it for this one.
+
+**Step by step**:
+
+1. **Uninstall the existing Linear app from GitHub**:
+   - Go to `https://github.com/settings/installations`
+   - Find **Linear** → click **Configure**
+   - Scroll to **Danger zone** → click **Uninstall**
+   - Confirm
+
+2. **Install for the new workspace**:
+   - Go to your new Linear workspace → **Settings → Integrations → GitHub → Enable**
+   - It will ask you to install the app on GitHub → select your account
+   - Choose **Only select repositories** → select the repo for this project
+   - Click **Save**
+   - Back in Linear, it should connect without error
+
+3. **Complete the setup** (Steps 8.2, 8.3, 8.4 above)
+
+4. **Reconnect the other workspace later** (when you're done):
+   - Go to the other Linear workspace → **Settings → Integrations → GitHub → Enable**
+   - Install the app again → select the repos for that project
+   - The previous workspace will be disconnected, but you can switch back any time
+
+**The impact of switching**: While a workspace is disconnected, PRs won't automatically move issues in Linear. But if that project uses harness scripts (like this one does), the scripts move issues via the API directly — so the impact is minimal.
+
+**Alternative — Use a GitHub Organization**: If you don't want to switch back and forth, create a free GitHub Organization for this project. The Linear app installs per org, so two orgs can connect to two different Linear workspaces without conflict.
 
 ## 9. Verify Everything Works
 
