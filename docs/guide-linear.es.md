@@ -203,11 +203,17 @@ Esto habilita la sincronización automática de estados (PR → In Progress, mer
 
 > **¿Por qué estas configuraciones?** El harness usa `Refs DEMO-XXX` (no `Closes`) en commits y descripciones de PR. El webhook detecta el identificador del issue en el nombre del branch (ej., `feat/HAR-5-dark-mode`) y actualiza el estado automáticamente.
 
-### Paso 8.4: Habilitar features adicionales (opcional)
+### Paso 8.4: Habilitar Pull Request Reviews en el sidebar
 
-En la configuración de la integración de GitHub, habilita:
-- **View pull requests in Linear** (Alpha) — toggle ON
-- **Pull request notifications** — All activity by people
+Esto agrega una sección **Reviews** en el sidebar de Linear donde puedes ver todos los PRs abiertos y los PRs pendientes de tu revisión — sin salir de Linear.
+
+1. Click en tu **avatar** (esquina inferior izquierda) → **Settings**
+2. En la barra lateral, click en **Connected accounts**
+3. Busca **GitHub** (debería decir "Connected")
+4. Activa el toggle: **"View pull requests in Linear"**
+5. Vuelve a la app — deberías ver **Reviews** en el sidebar
+
+> Este feature sincroniza comentarios de PR bidireccionalmente (Linear ↔ GitHub) y agrupa los PRs en: To Do (necesitan tu review), Waiting for others, y Approved.
 
 ### Solución: Múltiples Workspaces de Linear en la Misma Cuenta de GitHub
 
