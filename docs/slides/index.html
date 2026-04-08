@@ -357,7 +357,7 @@
 
 <!-- ── Slide 4: How It Works ── -->
 <section>
-  <h2 data-en="3 Commands, 15+ Actions" data-es="3 Comandos, 15+ Acciones">3 Commands, 15+ Actions</h2>
+  <h2 data-en="4 Commands, 15+ Actions" data-es="4 Comandos, 15+ Acciones">4 Commands, 15+ Actions</h2>
 
   <!-- Flow 1 -->
   <div class="diagram-flow">
@@ -501,7 +501,7 @@
 
 <!-- ── Slide 8: Secret Blocked ── -->
 <section>
-  <h2><span data-en="The" data-es="El">The</span> <span class="red">"Wow"</span> <span data-en="Moment" data-es="Momento">Moment</span></h2>
+  <h2 data-en="Secret Blocked &mdash; Multi-layer Defense" data-es="Secret Bloqueado &mdash; Defensa Multicapa">Secret Blocked &mdash; Multi-layer Defense</h2>
   <div class="secret-flow">
     <div class="sf-step" style="border-left:3px solid #f85149;">
       <div class="sf-num">1</div>
@@ -513,10 +513,19 @@
     </div>
     <div style="text-align:center; font-size:0.6em; color:#8b949e;" data-en="&darr; never reached GitHub" data-es="&darr; nunca lleg&oacute; a GitHub">&darr; never reached GitHub</div>
 
-    <div class="sf-step" style="border-left:3px solid #238636;">
+    <div class="sf-step" style="border-left:3px solid #58a6ff;">
       <div class="sf-num">2</div>
       <div class="sf-content">
-        <span data-en="Move key to" data-es="Mover key a">Move key to</span> <code>.env</code> &rarr; <code>git commit</code>
+        <span data-en="Agent detects the problem and fixes it" data-es="El agente detecta el problema y lo corrige">Agent detects the problem and fixes it</span>
+        <div class="d-label" data-en="Removes key from code &rarr; moves it to .env" data-es="Saca la key del c&oacute;digo &rarr; la mueve a .env">Removes key from code &rarr; moves it to .env</div>
+      </div>
+      <div class="sf-result blue" data-en="AUTO-FIX" data-es="AUTO-FIX">AUTO-FIX</div>
+    </div>
+
+    <div class="sf-step" style="border-left:3px solid #238636;">
+      <div class="sf-num">3</div>
+      <div class="sf-content">
+        <code>git commit</code> &mdash; <span data-en="clean code, key in .env" data-es="c&oacute;digo limpio, key en .env">clean code, key in .env</span>
         <div class="d-label" data-en="gitleaks scans... clean" data-es="gitleaks escanea... limpio">gitleaks scans... clean</div>
       </div>
       <div class="sf-result green" data-en="PASSED" data-es="PAS&Oacute;">PASSED</div>
@@ -524,7 +533,7 @@
     <div style="text-align:center; font-size:0.6em; color:#8b949e;" data-en="&darr; what if someone uses --no-verify?" data-es="&darr; &iquest;qu&eacute; pasa si alguien usa --no-verify?">&darr; what if someone uses --no-verify?</div>
 
     <div class="sf-step" style="border-left:3px solid #f85149;">
-      <div class="sf-num">3</div>
+      <div class="sf-num">4</div>
       <div class="sf-content">
         <span data-en="GitHub Actions runs gitleaks again" data-es="GitHub Actions corre gitleaks de nuevo">GitHub Actions runs gitleaks again</span>
         <div class="d-label" data-en="Second layer catches it + auto-creates bug in Linear" data-es="La segunda capa lo atrapa + auto-crea bug en Linear">Second layer catches it + auto-creates bug in Linear</div>
@@ -637,8 +646,8 @@
   <blockquote style="border-left:4px solid #d29922; padding-left:1em; font-style:italic;" data-en="&quot;If your tools don't give you control, build your own &mdash; it's simpler than you think.&quot;" data-es="&quot;Si tus herramientas no te dan control, construye las tuyas &mdash; es m&aacute;s simple de lo que crees.&quot;">
     "If your tools don't give you control, build your own &mdash; it's simpler than you think."
   </blockquote>
-  <p class="muted" style="margin-top:1em; font-size:0.8em;" data-en="The entire enforcement system fits in &lt;800 lines.<br>No frameworks. No dependencies. Full control." data-es="Todo el sistema de enforcement cabe en &lt;500 l&iacute;neas.<br>Sin frameworks. Sin dependencias. Control total.">
-    The entire enforcement system fits in &lt;800 lines.<br>
+  <p class="muted" style="margin-top:1em; font-size:0.8em;" data-en="The entire enforcement system fits in &lt;900 lines.<br>No frameworks. No dependencies. Full control." data-es="Todo el sistema de enforcement cabe en &lt;900 l&iacute;neas.<br>Sin frameworks. Sin dependencias. Control total.">
+    The entire enforcement system fits in &lt;900 lines.<br>
     No frameworks. No dependencies. Full control.
   </p>
 </section>
@@ -662,8 +671,8 @@
       <div class="d-label" data-en="Secrets, CI, Pages, hooks" data-es="Secrets, CI, Pages, hooks">Secrets, CI, Pages, hooks</div>
     </a>
   </div>
-  <p class="muted" style="margin-top:1.5em; font-size:0.7em;" data-en="Setup: ~2 hours &middot; Harness: &lt;800 lines &middot; ROI: immediate" data-es="Setup: ~2 horas &middot; Harness: &lt;500 l&iacute;neas &middot; ROI: inmediato">
-    Setup: ~2 hours &middot; Harness: &lt;800 lines &middot; ROI: immediate
+  <p class="muted" style="margin-top:1.5em; font-size:0.7em;" data-en="Setup: ~2 hours &middot; Harness: &lt;900 lines &middot; ROI: immediate" data-es="Setup: ~2 horas &middot; Harness: &lt;900 l&iacute;neas &middot; ROI: inmediato">
+    Setup: ~2 hours &middot; Harness: &lt;900 lines &middot; ROI: immediate
   </p>
 </section>
 
