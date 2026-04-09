@@ -96,13 +96,14 @@
 
     .d-arrow-down {
       color: #8b949e;
-      font-size: 1em;
+      font-size: 0.8em;
       text-align: center;
-      margin: 0.2em 0;
+      margin: 0;
+      line-height: 1;
     }
 
     .d-label {
-      font-size: 0.5em;
+      font-size: 0.55em;
       color: #8b949e;
       margin-top: 0.1em;
     }
@@ -118,13 +119,13 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.4em;
-      font-size: 0.7em;
+      justify-content: center;
+      gap: 0.15em;
     }
 
     .arch-row {
       display: flex;
-      gap: 0.8em;
+      gap: 0.5em;
       align-items: center;
       justify-content: center;
     }
@@ -132,10 +133,9 @@
     .arch-box {
       background: #161b22;
       border: 2px solid #30363d;
-      border-radius: 8px;
-      padding: 0.4em 0.7em;
+      border-radius: 6px;
+      padding: 0.2em 0.5em;
       text-align: center;
-      min-width: 90px;
     }
 
     .arch-box strong { color: #f0f6fc; }
@@ -447,7 +447,7 @@
 
 <!-- ── Slide 6: The System ── -->
 <section>
-  <h2 data-en="System Components" data-es="Componentes del Sistema">System Components</h2>
+  <h2 style="margin-bottom:0.1em;" data-en="System Components" data-es="Componentes del Sistema">System Components</h2>
   <div class="arch-diagram">
     <!-- You -->
     <div class="arch-row">
@@ -457,9 +457,9 @@
       </div>
     </div>
     <div class="d-arrow-down">&darr;</div>
-    <!-- Skills -->
+    <!-- Skills + CLAUDE.md -->
     <div class="arch-row">
-      <div class="arch-box" style="border-color:#238636; min-width:200px;">
+      <div class="arch-box" style="border-color:#238636;">
         <strong class="green">Skills</strong>
         <div class="d-label" data-en="Intelligent commands" data-es="Comandos inteligentes">Intelligent commands</div>
       </div>
@@ -469,9 +469,9 @@
       </div>
     </div>
     <div class="d-arrow-down" data-en="&darr; invoke" data-es="&darr; invocan">&darr; invoke</div>
-    <!-- Harness -->
+    <!-- Harness Scripts -->
     <div class="arch-row">
-      <div class="arch-box" style="border-color:#d29922; min-width:350px;">
+      <div class="arch-box" style="border-color:#d29922;">
         <strong class="yellow">Harness Scripts</strong>
         <div class="d-label">linear_client.py &middot; close_issue.sh &middot; check_issue_ref.sh &middot; ci_failure_bridge.py</div>
       </div>
@@ -761,7 +761,7 @@
     hash: true,
     transition: 'slide',
     width: 1200,
-    height: 700,
+    height: 800,
     margin: 0.1,
   });
 
