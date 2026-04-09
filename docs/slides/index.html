@@ -744,9 +744,12 @@
   <p class="muted" style="margin-top:1.5em; font-size:0.7em;" data-en="Setup: ~2 hours &middot; Harness: &lt;900 lines &middot; ROI: immediate" data-es="Setup: ~2 horas &middot; Harness: &lt;900 l&iacute;neas &middot; ROI: inmediato">
     Setup: ~2 hours &middot; Harness: &lt;900 lines &middot; ROI: immediate
   </p>
-  <p style="margin-top:1.5em; font-size:0.65em; color:#8b949e;" data-en="Made by <a href='https://www.linkedin.com/in/felirangelp/' style='color:#58a6ff;'>Felipe Rangel</a>" data-es="Realizado por <a href='https://www.linkedin.com/in/felirangelp/' style='color:#58a6ff;'>Felipe Rangel</a>">
-    Made by <a href="https://www.linkedin.com/in/felirangelp/" style="color:#58a6ff;">Felipe Rangel</a>
-  </p>
+  <div style="display:flex; align-items:center; justify-content:center; gap:1em; margin-top:1.5em;">
+    <div id="linkedin-qr-end" style="background:#fff; padding:6px; border-radius:6px; line-height:0;"></div>
+    <p style="font-size:0.65em; color:#8b949e; margin:0;" data-en="Made by <a href='https://www.linkedin.com/in/felirangelp/' style='color:#58a6ff;'>Felipe Rangel</a>" data-es="Realizado por <a href='https://www.linkedin.com/in/felirangelp/' style='color:#58a6ff;'>Felipe Rangel</a>">
+      Made by <a href="https://www.linkedin.com/in/felirangelp/" style="color:#58a6ff;">Felipe Rangel</a>
+    </p>
+  </div>
 </section>
 
 </div>
@@ -762,11 +765,13 @@
     margin: 0.1,
   });
 
-  // Generate LinkedIn QR code
+  // Generate LinkedIn QR codes (title + final slide)
   var qr = qrcode(0, 'M');
   qr.addData('https://www.linkedin.com/in/felirangelp/');
   qr.make();
-  document.getElementById('linkedin-qr').innerHTML = qr.createImgTag(3, 0);
+  var qrImg = qr.createImgTag(3, 0);
+  document.getElementById('linkedin-qr').innerHTML = qrImg;
+  document.getElementById('linkedin-qr-end').innerHTML = qrImg;
 
   var currentLang = 'en';
 
