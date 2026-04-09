@@ -558,18 +558,58 @@
     </div>
   </div>
 
-  <div style="margin-top:1em; padding:0.6em 1em; background:#161b22; border:1px solid #21262d; border-radius:8px; font-size:0.6em; text-align:left;">
-    <strong class="yellow" data-en="Live Demos" data-es="Demos en Vivo">Live Demos</strong>
-    <div style="margin-top:0.4em; display:flex; gap:1.5em;">
-      <div>
-        <strong class="red" data-en="Demo 1 &mdash; Secret Blocked" data-es="Demo 1 &mdash; Secret Bloqueado">Demo 1 &mdash; Secret Blocked</strong>
-        <div class="muted" data-en="We hardcode an API key &rarr; gitleaks blocks the commit &rarr; fix it &rarr; full cycle" data-es="Metemos una API key en el c&oacute;digo &rarr; gitleaks bloquea el commit &rarr; lo corregimos &rarr; ciclo completo">Metemos una API key en el c&oacute;digo &rarr; gitleaks bloquea el commit &rarr; lo corregimos &rarr; ciclo completo</div>
+  <div style="margin-top:0.8em; padding:0.5em 1em; background:#161b22; border:1px solid #21262d; border-radius:8px; font-size:0.6em; text-align:left;">
+    <strong class="yellow" data-en="&#9655; Live Demo 1" data-es="&#9655; Demo en Vivo 1">&#9655; Live Demo 1</strong>
+    <span class="muted" data-en=" &mdash; We hardcode an API key &rarr; gitleaks blocks &rarr; fix &rarr; full cycle" data-es=" &mdash; Metemos una API key &rarr; gitleaks bloquea &rarr; corregimos &rarr; ciclo completo"> &mdash; Metemos una API key &rarr; gitleaks bloquea &rarr; corregimos &rarr; ciclo completo</span>
+  </div>
+</section>
+
+<!-- ── Slide 8b: Demo 2 - CI Catches Bug ── -->
+<section>
+  <h2 data-en="CI Catches a Bug" data-es="CI Atrapa un Bug">CI Catches a Bug</h2>
+  <div class="secret-flow">
+    <div class="sf-step" style="border-left:3px solid #238636;">
+      <div class="sf-num">1</div>
+      <div class="sf-content">
+        <span data-en="Add &ldquo;Export JSON&rdquo; button" data-es="Agregar bot&oacute;n &ldquo;Export JSON&rdquo;">Add &ldquo;Export JSON&rdquo; button</span>
+        <div class="d-label" data-en="New feature requested via Linear issue" data-es="Nueva feature solicitada v&iacute;a issue en Linear">New feature requested via Linear issue</div>
       </div>
-      <div>
-        <strong class="blue" data-en="Demo 2 &mdash; CI Catches a Bug" data-es="Demo 2 &mdash; CI Atrapa un Bug">Demo 2 &mdash; CI Catches a Bug</strong>
-        <div class="muted" data-en="We add a feature with an accidental bug &rarr; CI fails &rarr; fix &amp; close with evidence" data-es="Agregamos una feature con un bug accidental &rarr; CI falla &rarr; corregimos y cerramos con evidencia">Agregamos una feature con un bug accidental &rarr; CI falla &rarr; corregimos y cerramos con evidencia</div>
-      </div>
+      <div class="sf-result green" data-en="FEATURE" data-es="FEATURE">FEATURE</div>
     </div>
+
+    <div class="sf-step" style="border-left:3px solid #d29922;">
+      <div class="sf-num">2</div>
+      <div class="sf-content">
+        <span data-en="Accidental bug in <code>deleteTask</code>" data-es="Bug accidental en <code>deleteTask</code>">Accidental bug in <code>deleteTask</code></span>
+        <div class="d-label" data-en="Filter logic inverted during refactor: === instead of !==" data-es="L&oacute;gica del filtro invertida en refactor: === en vez de !==">Filter logic inverted during refactor: === instead of !==</div>
+      </div>
+      <div class="sf-result yellow" data-en="BUG" data-es="BUG">BUG</div>
+    </div>
+
+    <div style="text-align:center; font-size:0.6em; color:#8b949e;" data-en="&darr; pre-commit passes (no tests) &rarr; push &rarr; PR" data-es="&darr; pre-commit pasa (no corre tests) &rarr; push &rarr; PR">&darr; pre-commit passes (no tests) &rarr; push &rarr; PR</div>
+
+    <div class="sf-step" style="border-left:3px solid #f85149;">
+      <div class="sf-num">3</div>
+      <div class="sf-content">
+        <span data-en="GitHub Actions runs tests" data-es="GitHub Actions corre los tests">GitHub Actions runs tests</span>
+        <div class="d-label" data-en="&ldquo;deleteTask removes the card&rdquo; &rarr; FAIL" data-es="&ldquo;deleteTask removes the card&rdquo; &rarr; FALLA">&ldquo;deleteTask removes the card&rdquo; &rarr; FAIL</div>
+      </div>
+      <div class="sf-result red" data-en="CI FAILED" data-es="CI FALL&Oacute;">CI FAILED</div>
+    </div>
+
+    <div class="sf-step" style="border-left:3px solid #238636;">
+      <div class="sf-num">4</div>
+      <div class="sf-content">
+        <span data-en="Fix the bug, push again" data-es="Corregir el bug, push de nuevo">Fix the bug, push again</span>
+        <div class="d-label" data-en="Revert === to !== &rarr; CI passes &rarr; close with evidence" data-es="Revertir === a !== &rarr; CI pasa &rarr; cerrar con evidencia">Revert === to !== &rarr; CI passes &rarr; close with evidence</div>
+      </div>
+      <div class="sf-result green" data-en="FIXED" data-es="CORREGIDO">FIXED</div>
+    </div>
+  </div>
+
+  <div style="margin-top:0.8em; padding:0.5em 1em; background:#161b22; border:1px solid #21262d; border-radius:8px; font-size:0.6em; text-align:left;">
+    <strong class="yellow" data-en="&#9655; Live Demo 2" data-es="&#9655; Demo en Vivo 2">&#9655; Live Demo 2</strong>
+    <span class="muted" data-en=" &mdash; Feature + accidental bug &rarr; CI catches it &rarr; fix &amp; close with 3 gates" data-es=" &mdash; Feature + bug accidental &rarr; CI lo atrapa &rarr; corregimos y cerramos con 3 gates"> &mdash; Feature + bug accidental &rarr; CI lo atrapa &rarr; corregimos y cerramos con 3 gates</span>
   </div>
 </section>
 
