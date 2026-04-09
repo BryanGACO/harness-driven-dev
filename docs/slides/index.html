@@ -6,6 +6,7 @@
   <title>HDD — Slides</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css">
+  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
   <style>
     :root {
       --r-background-color: #0d1117;
@@ -301,9 +302,12 @@
 <section>
   <h1>Harness-Driven<br><span class="blue">Development</span></h1>
   <p class="subtitle" data-en="Orchestrating Linear + GitHub with AI Agents" data-es="Orquestando Linear + GitHub con Agentes IA">Orchestrating Linear + GitHub with AI Agents</p>
-  <p style="font-size:0.65em; margin-top:1.5em; color:#8b949e;" data-en="by <a href='https://www.linkedin.com/in/felirangelp/' style='color:#58a6ff;'>Felipe Rangel</a>" data-es="por <a href='https://www.linkedin.com/in/felirangelp/' style='color:#58a6ff;'>Felipe Rangel</a>">
-    by <a href="https://www.linkedin.com/in/felirangelp/" style="color:#58a6ff;">Felipe Rangel</a>
-  </p>
+  <div style="display:flex; align-items:center; justify-content:center; gap:1em; margin-top:1.5em;">
+    <div id="linkedin-qr" style="background:#fff; padding:6px; border-radius:6px; line-height:0;"></div>
+    <p style="font-size:0.65em; color:#8b949e; margin:0;" data-en="by <a href='https://www.linkedin.com/in/felirangelp/' style='color:#58a6ff;'>Felipe Rangel</a>" data-es="por <a href='https://www.linkedin.com/in/felirangelp/' style='color:#58a6ff;'>Felipe Rangel</a>">
+      by <a href="https://www.linkedin.com/in/felirangelp/" style="color:#58a6ff;">Felipe Rangel</a>
+    </p>
+  </div>
   <p class="muted" style="font-size:0.6em; margin-top:2em;">
     <span data-en="Navigate: arrow keys" data-es="Navegar: teclas de flecha">Navigate: arrow keys</span> &middot; <a href="../" data-en="Back to site" data-es="Volver al sitio">Back to site</a>
   </p>
@@ -717,6 +721,12 @@
     height: 700,
     margin: 0.1,
   });
+
+  // Generate LinkedIn QR code
+  var qr = qrcode(0, 'M');
+  qr.addData('https://www.linkedin.com/in/felirangelp/');
+  qr.make();
+  document.getElementById('linkedin-qr').innerHTML = qr.createImgTag(3, 0);
 
   var currentLang = 'en';
 
