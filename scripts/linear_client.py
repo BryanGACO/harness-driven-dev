@@ -246,7 +246,7 @@ def _get_team_id(team_key="DEMO"):
     return teams[0]["id"]
 
 
-def create_issue(title, description=None, team_key="DEMO"):
+def create_issue(title, description=None, team_key="DEMO", project_id=None):
     """Create a new issue in Linear. Returns the issue dict or None."""
     team_id = _get_team_id(team_key)
     if not team_id:
@@ -265,6 +265,11 @@ def create_issue(title, description=None, team_key="DEMO"):
         variables["description"] = description
         input_fields += ", description: $description"
         var_defs += ", $description: String"
+
+    if project_id:
+        variables["projectId"] = project_id
+        input_fields += ", projectId: $projectId"
+        var_defs += ", $projectId: String"
 
     result = _query(f"""
         mutation({var_defs}) {{
@@ -336,7 +341,8 @@ def main():
         title = sys.argv[2]
         description = sys.argv[3] if len(sys.argv) > 3 else None
         team_key = os.environ.get("LINEAR_TEAM_KEY", "DEMO")
-        issue = create_issue(title, description, team_key)
+        project_id = os.environ.get("LINEAR_PROJECT_ID")
+        issue = create_issue(title, description, team_key, project_id)
         if issue:
             print(f"Created: {issue['identifier']}  {issue['title']}")
             print(f"  URL: {issue.get('url', 'N/A')}")
