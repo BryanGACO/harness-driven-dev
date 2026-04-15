@@ -10,6 +10,7 @@ Usage:
   python scripts/linear_client.py move DEMO-1 "In Progress"
   python scripts/linear_client.py comment DEMO-1 "Evidence message"
   python scripts/linear_client.py list [--state "In Progress"]
+  python scripts/linear_client.py check-team
 """
 import os
 import sys
@@ -39,10 +40,13 @@ def _get_api_key():
     env_vars = _load_env()
     key = env_vars.get("LINEAR_API_KEY")
     if key:
-        # Also load team key if present
+        # Also load team key and project id if present
         team_key = env_vars.get("LINEAR_TEAM_KEY")
         if team_key and "LINEAR_TEAM_KEY" not in os.environ:
             os.environ["LINEAR_TEAM_KEY"] = team_key
+        project_id = env_vars.get("LINEAR_PROJECT_ID")
+        if project_id and "LINEAR_PROJECT_ID" not in os.environ:
+            os.environ["LINEAR_PROJECT_ID"] = project_id
         return key
     return os.environ.get("LINEAR_API_KEY")
 
@@ -367,6 +371,14 @@ def main():
         ok = add_comment(sys.argv[2], sys.argv[3])
         if ok:
             print(f"Comment added to {sys.argv[2]}")
+        else:
+            sys.exit(1)
+
+    elif cmd == "check-team":
+        team_key = os.environ.get("LINEAR_TEAM_KEY", "DEMO")
+        team_id = _get_team_id(team_key)
+        if team_id:
+            print(f"Team '{team_key}' found.")
         else:
             sys.exit(1)
 

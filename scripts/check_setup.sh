@@ -27,7 +27,7 @@ YELLOW='\033[0;33m'
 NC='\033[0m'
 
 CHECKS_PASSED=0
-CHECKS_TOTAL=7
+CHECKS_TOTAL=8
 
 pass() { echo -e "${GREEN}PASS${NC}"; CHECKS_PASSED=$((CHECKS_PASSED + 1)); }
 fail() { echo -e "${RED}FAIL${NC}"; echo -e "${YELLOW}  Fix: $1${NC}"; }
@@ -89,7 +89,7 @@ fi
 
 # ── Check 4: Linear API responde ──
 
-echo -n "Check 4/7 — Linear API responde... "
+echo -n "Check 4/8 — Linear API responde... "
 LINEAR_RESPONSE=$(python3 "$SCRIPT_DIR/linear_client.py" list 2>&1)
 LINEAR_EXIT=$?
 if [ $LINEAR_EXIT -ne 0 ] || echo "$LINEAR_RESPONSE" | grep -qi "error\|unauthorized\|invalid"; then
@@ -98,9 +98,22 @@ else
     pass
 fi
 
-# ── Check 5: pre-commit hooks instalados ──
+# ── Check 5: Linear team key valida ──
 
-echo -n "Check 5/7 — pre-commit hooks instalados... "
+echo -n "Check 5/8 — Linear team key valida... "
+TEAM_KEY_FROM_ENV=$(grep -E '^LINEAR_TEAM_KEY=' "$PROJECT_DIR/.env" 2>/dev/null | cut -d= -f2 | tr -d '"' | tr -d "'" | tr -d ' ')
+TEAM_RESPONSE=$(python3 "$SCRIPT_DIR/linear_client.py" check-team 2>&1)
+TEAM_EXIT=$?
+if [ $TEAM_EXIT -ne 0 ]; then
+    fail "El team '$TEAM_KEY_FROM_ENV' no existe en Linear. Verifica LINEAR_TEAM_KEY en .env"
+else
+    echo -e "${GREEN}PASS${NC} (team: $TEAM_KEY_FROM_ENV)"
+    CHECKS_PASSED=$((CHECKS_PASSED + 1))
+fi
+
+# ── Check 6: pre-commit hooks instalados ──
+
+echo -n "Check 6/8 — pre-commit hooks instalados... "
 HOOKS_DIR="$PROJECT_DIR/.git/hooks"
 MISSING=""
 [ ! -f "$HOOKS_DIR/pre-commit" ] && MISSING="pre-commit"
@@ -112,18 +125,18 @@ else
     pass
 fi
 
-# ── Check 6: Node dependencies ──
+# ── Check 7: Node dependencies ──
 
-echo -n "Check 6/7 — Node dependencies instaladas... "
+echo -n "Check 7/8 — Node dependencies instaladas... "
 if [ ! -d "$PROJECT_DIR/node_modules" ]; then
     fail "Ejecuta: npm install"
 else
     pass
 fi
 
-# ── Check 7: Tests pasan ──
+# ── Check 8: Tests pasan ──
 
-echo -n "Check 7/7 — Tests pasan... "
+echo -n "Check 8/8 — Tests pasan... "
 TEST_OUTPUT=$(cd "$PROJECT_DIR" && npm test --silent 2>&1)
 TEST_EXIT=$?
 if [ $TEST_EXIT -ne 0 ]; then
