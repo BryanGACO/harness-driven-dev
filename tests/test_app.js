@@ -130,7 +130,7 @@ test("Column counters update on add/move/delete", function () {
   assert(doc.getElementById("count-backlog").textContent === "2", "Backlog count should be 2");
 
   var idA = TB.getTasks()[0].id;
-  TB.moveTask(idA, "in-progresss"); // Intentional typo to test error handling
+  TB.moveTask(idA, "in-progressd");
   assert(doc.getElementById("count-backlog").textContent === "1", "Backlog count should be 1");
   assert(doc.getElementById("count-in-progress").textContent === "1", "In-progress count should be 1");
 
