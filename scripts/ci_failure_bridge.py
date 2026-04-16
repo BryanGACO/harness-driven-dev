@@ -7,6 +7,7 @@ Usage:
   python scripts/ci_failure_bridge.py <run_id>
 """
 import os
+import re
 import sys
 import json
 import subprocess
@@ -47,6 +48,32 @@ def get_repo_url():
         return url.rstrip(".git")
     except Exception:
         return "https://github.com/OWNER/REPO"
+
+
+def extract_issue_id_from_run(run_id):
+    """Extract Linear issue identifier from 'Refs XXX' in the head commit message of a run."""
+    try:
+        result = subprocess.run(
+            ["gh", "run", "view", str(run_id), "--json", "headCommit"],
+            capture_output=True, text=True, timeout=30,
+        )
+        if result.returncode != 0:
+            return None
+        message = json.loads(result.stdout).get("headCommit", {}).get("message", "")
+        match = re.search(r'Refs\s+([A-Z]+-\d+)', message)
+        return match.group(1) if match else None
+    except Exception:
+        return None
+
+
+def resolve_parent_id(issue_identifier):
+    """Resolve Linear internal UUID from issue identifier (e.g. DEV-14)."""
+    result = _query("""
+        query($id: String!) {
+            issue(id: $id) { id }
+        }
+    """, {"id": issue_identifier})
+    return result.get("data", {}).get("issue", {}).get("id")
 
 
 def create_ci_bug(run_id, failed_jobs, branch):
@@ -100,20 +127,35 @@ def create_ci_bug(run_id, failed_jobs, branch):
             sys.exit(1)
         team_id = teams[0]["id"]
 
-        # Create new bug issue
-        _query("""
-            mutation($title: String!, $description: String!, $teamId: String!) {
-                issueCreate(input: {
+        # Resolve parent issue from commit's Refs reference
+        parent_uuid = None
+        parent_identifier = extract_issue_id_from_run(run_id)
+        if parent_identifier:
+            parent_uuid = resolve_parent_id(parent_identifier)
+            if parent_uuid:
+                print(f"Linking as sub-issue of {parent_identifier}")
+
+        # Create new bug issue (with parentId if resolved)
+        variables = {"title": title, "description": description, "teamId": team_id}
+        parent_field = "parentId: $parentId" if parent_uuid else ""
+        parent_var = ", $parentId: String" if parent_uuid else ""
+        if parent_uuid:
+            variables["parentId"] = parent_uuid
+
+        _query(f"""
+            mutation($title: String!, $description: String!, $teamId: String!{parent_var}) {{
+                issueCreate(input: {{
                     title: $title
                     description: $description
                     teamId: $teamId
                     priority: 1
-                }) {
+                    {parent_field}
+                }}) {{
                     success
-                    issue { identifier url }
-                }
-            }
-        """, {"title": title, "description": description, "teamId": team_id})
+                    issue {{ identifier url }}
+                }}
+            }}
+        """, variables)
         print(f"Created new CI bridge issue: {title}")
 
 
