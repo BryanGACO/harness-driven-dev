@@ -20,6 +20,7 @@ jobs:
       - name: Create bug in Linear
         env:
           LINEAR_API_KEY: ${{ secrets.LINEAR_API_KEY }}
+          LINEAR_TEAM_KEY: ${{ secrets.LINEAR_TEAM_KEY }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_RUN_ID: ${{ github.event.workflow_run.id }}
           GITHUB_HEAD_REF: ${{ github.event.workflow_run.head_branch }}
