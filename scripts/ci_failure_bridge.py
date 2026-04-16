@@ -73,12 +73,11 @@ def extract_issue_id(branch, run_id):
 
 def resolve_parent_id(issue_identifier):
     """Resolve Linear internal UUID from issue identifier (e.g. DEV-14)."""
-    result = _query("""
-        query($id: String!) {
-            issue(id: $id) { id }
-        }
-    """, {"id": issue_identifier})
-    return result.get("data", {}).get("issue", {}).get("id")
+    try:
+        issue = get_issue(issue_identifier)
+        return issue.get("id") if issue else None
+    except (SystemExit, Exception):
+        return None
 
 
 def create_ci_bug(run_id, failed_jobs, branch):
