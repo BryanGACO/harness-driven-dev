@@ -67,7 +67,7 @@ def create_ci_bug(run_id, failed_jobs, branch):
         query {
             issues(filter: {
                 title: { contains: "[CI-BRIDGE]" }
-                state: { type: { in: [started, unstarted] } }
+                state: { type: { in: ["started", "unstarted"] } }
             }, first: 1) {
                 nodes { id identifier }
             }
