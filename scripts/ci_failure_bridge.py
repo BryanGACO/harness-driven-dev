@@ -50,20 +50,25 @@ def get_repo_url():
         return "https://github.com/OWNER/REPO"
 
 
-def extract_issue_id_from_run(run_id):
-    """Extract Linear issue identifier from 'Refs XXX' in the head commit message of a run."""
+def extract_issue_id(branch, run_id):
+    """Extract Linear issue identifier from commit Refs, falling back to branch name."""
+    # Primary: look for 'Refs XXX' in the head commit message
     try:
         result = subprocess.run(
             ["gh", "run", "view", str(run_id), "--json", "headCommit"],
             capture_output=True, text=True, timeout=30,
         )
-        if result.returncode != 0:
-            return None
-        message = json.loads(result.stdout).get("headCommit", {}).get("message", "")
-        match = re.search(r'Refs\s+([A-Z]+-\d+)', message)
-        return match.group(1) if match else None
+        if result.returncode == 0:
+            message = json.loads(result.stdout).get("headCommit", {}).get("message", "")
+            match = re.search(r'Refs\s+([A-Z]+-\d+)', message)
+            if match:
+                return match.group(1)
     except Exception:
-        return None
+        pass
+
+    # Fallback: extract from branch name (e.g. feat/DEV-14-slug → DEV-14)
+    match = re.search(r'([A-Z]+-\d+)', branch)
+    return match.group(1) if match else None
 
 
 def resolve_parent_id(issue_identifier):
@@ -129,7 +134,7 @@ def create_ci_bug(run_id, failed_jobs, branch):
 
         # Resolve parent issue from commit's Refs reference
         parent_uuid = None
-        parent_identifier = extract_issue_id_from_run(run_id)
+        parent_identifier = extract_issue_id(branch, run_id)
         if parent_identifier:
             parent_uuid = resolve_parent_id(parent_identifier)
             if parent_uuid:
