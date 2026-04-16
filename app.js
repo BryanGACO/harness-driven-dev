@@ -5,7 +5,7 @@
 (function () {
   "use strict";
 
-  const STATUSES = ["todo", "in-progress", "done"];
+  const STATUSES = ["backlog", "todo", "in-progress", "done"];
 
   // ── Linear API ──
 
@@ -119,7 +119,7 @@
     tasks.push({
       id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
       title: title.trim(),
-      status: "todo",
+      status: "backlog",
     });
     saveTasks(tasks);
     render();
