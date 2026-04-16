@@ -133,9 +133,12 @@ def create_ci_bug(run_id, failed_jobs, branch):
 
         # Resolve parent issue from commit's Refs reference
         parent_uuid = None
+        print(f"DEBUG branch={branch!r} run_id={run_id!r}")
         parent_identifier = extract_issue_id(branch, run_id)
+        print(f"DEBUG parent_identifier={parent_identifier!r}")
         if parent_identifier:
             parent_uuid = resolve_parent_id(parent_identifier)
+            print(f"DEBUG parent_uuid={parent_uuid!r}")
             if parent_uuid:
                 print(f"Linking as sub-issue of {parent_identifier}")
 
