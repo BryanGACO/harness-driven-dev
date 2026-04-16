@@ -20,6 +20,7 @@ jobs:
       - name: Create bug in Linear
         env:
           LINEAR_API_KEY: ${{ secrets.LINEAR_API_KEY }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_RUN_ID: ${{ github.event.workflow_run.id }}
           GITHUB_HEAD_REF: ${{ github.event.workflow_run.head_branch }}
         run: python scripts/ci_failure_bridge.py "$GITHUB_RUN_ID"
