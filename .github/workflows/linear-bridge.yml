@@ -22,6 +22,6 @@ jobs:
           LINEAR_API_KEY: ${{ secrets.LINEAR_API_KEY }}
           LINEAR_TEAM_KEY: ${{ secrets.LINEAR_TEAM_KEY }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_RUN_ID: ${{ github.event.workflow_run.id }}
-          GITHUB_HEAD_REF: ${{ github.event.workflow_run.head_branch }}
-        run: python scripts/ci_failure_bridge.py "$GITHUB_RUN_ID"
+          CI_RUN_ID: ${{ github.event.workflow_run.id }}
+          CI_HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
+        run: python scripts/ci_failure_bridge.py "$CI_RUN_ID"

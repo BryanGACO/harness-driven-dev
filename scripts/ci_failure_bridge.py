@@ -172,7 +172,7 @@ def main():
         sys.exit(1)
 
     run_id = sys.argv[1]
-    branch = os.environ.get("GITHUB_HEAD_REF", "unknown")
+    branch = os.environ.get("CI_HEAD_BRANCH", "unknown")
     failed = get_failed_jobs(run_id)
 
     if failed:
