@@ -50,27 +50,29 @@ fi
 # ── Gate 2: CI Green ──
 
 echo -n "Gate 2/3 — CI green... "
-if command -v gh &>/dev/null; then
+if ! command -v gh &>/dev/null; then
+    # Only this case is a legitimate skip: the environment can't query CI at all.
+    # Treat as pass so local dev without gh isn't permanently blocked.
+    echo -e "${YELLOW}SKIP (gh CLI not installed)${NC}"
+    GATES_PASSED=$((GATES_PASSED + 1))
+else
     BRANCH=$(git branch --show-current 2>/dev/null || echo "")
-    if [ -n "$BRANCH" ]; then
-        CI_STATUS=$(gh run list --branch "$BRANCH" --workflow ci.yml --limit 1 --json conclusion --jq '.[0].conclusion' 2>/dev/null || echo "unknown")
+    if [ -z "$BRANCH" ] || [ "$BRANCH" = "main" ] || [ "$BRANCH" = "master" ]; then
+        echo -e "${RED}FAIL (not on a feature branch)${NC}"
+        echo -e "${YELLOW}  Fix: Close issues from a feature branch, not main/master.${NC}"
+    else
+        CI_STATUS=$(gh run list --branch "$BRANCH" --workflow ci.yml --limit 1 --json conclusion --jq '.[0].conclusion' 2>/dev/null || echo "")
         if [ "$CI_STATUS" = "success" ]; then
             echo -e "${GREEN}PASS${NC}"
             GATES_PASSED=$((GATES_PASSED + 1))
-        elif [ "$CI_STATUS" = "unknown" ] || [ -z "$CI_STATUS" ]; then
-            echo -e "${YELLOW}SKIP (no CI runs found)${NC}"
-            GATES_PASSED=$((GATES_PASSED + 1))
+        elif [ -z "$CI_STATUS" ] || [ "$CI_STATUS" = "null" ]; then
+            echo -e "${RED}FAIL (no CI runs for branch '$BRANCH')${NC}"
+            echo -e "${YELLOW}  Fix: Push the branch and open a PR so CI can run before closing.${NC}"
         else
             echo -e "${RED}FAIL (last run: $CI_STATUS)${NC}"
             echo -e "${YELLOW}  Fix: Check GitHub Actions and fix the failing workflow.${NC}"
         fi
-    else
-        echo -e "${YELLOW}SKIP (not on a branch)${NC}"
-        GATES_PASSED=$((GATES_PASSED + 1))
     fi
-else
-    echo -e "${YELLOW}SKIP (gh CLI not installed)${NC}"
-    GATES_PASSED=$((GATES_PASSED + 1))
 fi
 
 # ── Gate 3: Acceptance Criteria ──
@@ -173,8 +175,15 @@ if [ "$GATES_PASSED" -eq "$GATES_TOTAL" ]; then
 
     # Acceptance criteria count
     ISSUE_FULL=$(python3 "$SCRIPT_DIR/linear_client.py" get "$ISSUE_ID" --full 2>/dev/null || echo "")
-    AC_CHECKED=$(echo "$ISSUE_FULL" | grep -ci '\- \[x\]' || true)
-    AC_TOTAL=$((AC_CHECKED + $(echo "$ISSUE_FULL" | grep -c '\- \[ \]' || true)))
+    AC_CHECKED=$(echo "$ISSUE_FULL" | awk 'tolower($0) ~ /\- \[x\]/ {n++} END {print n+0}')
+    AC_UNCHECKED=$(echo "$ISSUE_FULL" | awk '/\- \[ \]/ {n++} END {print n+0}')
+    AC_TOTAL=$((AC_CHECKED + AC_UNCHECKED))
+
+    # Precompute optional lines (avoid `[ -n ] && echo` inside heredoc — fails under set -e)
+    PR_LINE=""
+    [ -n "$PR_LINK" ] && PR_LINE="- **PR**: ${PR_LINK}"
+    CI_LINE_SUFFIX=""
+    [ -n "$CI_RUN_LINK" ] && CI_LINE_SUFFIX=" — ${CI_RUN_LINK}"
 
     # Build markdown evidence
     EVIDENCE="## Evidencia de cierre — ${ISSUE_ID}
@@ -191,7 +200,7 @@ if [ "$GATES_PASSED" -eq "$GATES_TOTAL" ]; then
 - **Autor**: ${COMMIT_AUTHOR}
 - **Fecha commit**: ${COMMIT_DATE}
 - **Mensaje**: ${COMMIT_MSG}
-$([ -n "$PR_LINK" ] && echo "- **PR**: ${PR_LINK}")
+${PR_LINE}
 
 **Diff stats**
 
@@ -212,7 +221,7 @@ ${FILES_CHANGED}
 ### 4. Quality Gates
 
 - **Gate 1 — Tests**: PASS (${TESTS_PASSED})
-- **Gate 2 — CI/CD**: ${CI_STATUS_TEXT}$([ -n "$CI_RUN_LINK" ] && echo " — ${CI_RUN_LINK}")
+- **Gate 2 — CI/CD**: ${CI_STATUS_TEXT}${CI_LINE_SUFFIX}
 - **Gate 3 — Acceptance Criteria**: PASS (${AC_CHECKED}/${AC_TOTAL} checked)
 
 ### 5. Audit Trail

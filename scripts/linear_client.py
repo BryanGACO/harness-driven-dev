@@ -12,6 +12,7 @@ Usage:
   python scripts/linear_client.py list [--state "In Progress"]
   python scripts/linear_client.py check-team
 """
+import io
 import os
 import sys
 import json
@@ -307,6 +308,10 @@ def _print_issue(issue, full=False):
 
 
 def main():
+    # Fix Unicode output on Windows consoles (cp1252 → utf-8)
+    if hasattr(sys.stdout, 'buffer'):
+        sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+
     # Load .env before any command
     _get_api_key()
 

@@ -29,11 +29,15 @@ Begin work on Linear issue `$ARGUMENTS`.
    python3 scripts/linear_client.py move $0 "In Progress"
    ```
 
-4. **Confirm** to the user:
+4. **Confirm** to the user using this box format:
    ```
-   Issue $0 started.
-   Branch: feat/$0-<slug>
-   Status: In Progress
+   ┌─────────────────────────────────────┐
+   │  Issue $0 started                   │
+   ├─────────────────────────────────────┤
+   │  Branch : feat/$0-<slug>            │
+   │  Status : In Progress               │
+   │  Title  : <issue title>             │
+   └─────────────────────────────────────┘
    ```
 
 ## Rules

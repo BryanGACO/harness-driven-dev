@@ -42,24 +42,28 @@ function freshBoard() {
 
 console.log("\nHDD Task Board Tests\n" + "=".repeat(40));
 
-// ── Test 1: Board renders three empty columns ──
+// ── Test 1: Board renders four empty columns ──
 
-test("Board renders three empty columns", function () {
+test("Board renders four empty columns", function () {
   var dom = freshBoard();
   var doc = dom.window.document;
   var columns = doc.querySelectorAll(".column");
-  assert(columns.length === 3, "Expected 3 columns, got " + columns.length);
+  assert(columns.length === 4, "Expected 4 columns, got " + columns.length);
 
   var statuses = Array.from(columns).map(function (c) { return c.dataset.status; });
+  assert(statuses.indexOf("backlog") !== -1, "Missing 'backlog' column");
   assert(statuses.indexOf("todo") !== -1, "Missing 'todo' column");
   assert(statuses.indexOf("in-progress") !== -1, "Missing 'in-progress' column");
   assert(statuses.indexOf("done") !== -1, "Missing 'done' column");
+
+  // Backlog must appear before Todo
+  assert(statuses.indexOf("backlog") < statuses.indexOf("todo"), "Backlog must be before Todo");
   dom.window.close();
 });
 
 // ── Test 2: Add a task ──
 
-test("addTask creates a card in To Do", function () {
+test("addTask creates a card in Backlog", function () {
   var dom = freshBoard();
   var TB = dom.window.TaskBoard;
 
@@ -67,9 +71,9 @@ test("addTask creates a card in To Do", function () {
   var tasks = TB.getTasks();
   assert(tasks.length === 1, "Expected 1 task, got " + tasks.length);
   assert(tasks[0].title === "Write tests", "Wrong title: " + tasks[0].title);
-  assert(tasks[0].status === "todo", "Wrong status: " + tasks[0].status);
+  assert(tasks[0].status === "backlog", "Wrong status: " + tasks[0].status);
 
-  var cards = dom.window.document.querySelectorAll("#list-todo .task-card");
+  var cards = dom.window.document.querySelectorAll("#list-backlog .task-card");
   assert(cards.length === 1, "Expected 1 card in DOM, got " + cards.length);
   dom.window.close();
 });
@@ -82,6 +86,9 @@ test("moveTask moves card to next column", function () {
 
   TB.addTask("Move me");
   var id = TB.getTasks()[0].id;
+
+  TB.moveTask(id, "todo");
+  assert(TB.getTasks()[0].status === "todo", "Task not moved to todo");
 
   TB.moveTask(id, "in-progress");
   assert(TB.getTasks()[0].status === "in-progress", "Task not moved to in-progress");
@@ -120,11 +127,11 @@ test("Column counters update on add/move/delete", function () {
 
   TB.addTask("Task A");
   TB.addTask("Task B");
-  assert(doc.getElementById("count-todo").textContent === "2", "Todo count should be 2");
+  assert(doc.getElementById("count-backlog").textContent === "2", "Backlog count should be 2");
 
   var idA = TB.getTasks()[0].id;
-  TB.moveTask(idA, "in-progress");
-  assert(doc.getElementById("count-todo").textContent === "1", "Todo count should be 1");
+  TB.moveTask(idA, "in-progressd");
+  assert(doc.getElementById("count-backlog").textContent === "1", "Backlog count should be 1");
   assert(doc.getElementById("count-in-progress").textContent === "1", "In-progress count should be 1");
 
   TB.deleteTask(idA);
