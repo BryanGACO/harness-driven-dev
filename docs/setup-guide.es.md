@@ -119,10 +119,40 @@ CI corre automáticamente en push/PR a `main`. Dos workflows:
 
 | Workflow | Archivo | Trigger | Qué hace |
 |----------|---------|---------|----------|
-| CI | `.github/workflows/ci.yml` | push, PR | Corre tests + gitleaks |
+| CI | `.github/workflows/ci.yml` | push, PR, manual | Corre tests + gitleaks |
 | Linear Bridge | `.github/workflows/linear-bridge.yml` | CI failure | Crea bug en Linear |
 
-No necesita configuración extra — solo asegúrate de que `LINEAR_API_KEY` esté como GitHub secret (paso 3.3).
+### 5.1 Secrets requeridos en GitHub
+
+Ve a **Settings → Secrets and variables → Actions** y agrega:
+
+| Secret | Valor | Para qué |
+|--------|-------|----------|
+| `LINEAR_API_KEY` | `lin_api_...` | Autenticar llamadas a la API de Linear |
+| `LINEAR_TEAM_KEY` | Ej.: `DEV`, `HAR` | Identificar el equipo en Linear al crear bugs |
+
+```bash
+gh secret set LINEAR_API_KEY
+gh secret set LINEAR_TEAM_KEY
+```
+
+### 5.2 Pasos especiales si el repo es un fork
+
+Si clonaste este repo como fork (no como repo nuevo), GitHub Actions requiere pasos adicionales:
+
+1. **Habilitar Actions en el fork**: Ve a **Settings → Actions → General** y selecciona _"Allow all actions and reusable workflows"_.
+
+2. **Forzar el indexado de workflows**: GitHub solo registra workflows que existieron en `main` mediante un push real. Si los workflows no aparecen en la pestaña Actions, haz un push vacío a `main`:
+   ```bash
+   git commit --allow-empty --no-verify -m "chore: trigger Actions workflow indexing"
+   git push origin main
+   ```
+
+3. **Verificar que los workflows quedaron registrados**:
+   ```bash
+   gh api repos/OWNER/REPO/actions/workflows --jq '.total_count'
+   # Debe retornar 2 (CI y Linear Bridge)
+   ```
 
 ## 6. Claude Code
 
@@ -222,3 +252,46 @@ flowchart TD
 
 **Tests fallan con "Cannot find module jsdom"**
 - Ejecuta `npm install` para instalar dependencias
+
+---
+
+### Problemas específicos de GitHub Actions
+
+**La pestaña Actions está vacía / `total_count: 0` en workflows**
+- El repo es un fork y GitHub no indexó los workflows automáticamente
+- Solución: push vacío a `main` con `git commit --allow-empty` para forzar el indexado
+
+**CI no se dispara en el PR después de varios pushes**
+- GitHub puede ignorar commits vacíos consecutivos (`--allow-empty`)
+- Solución: hacer un cambio real en cualquier archivo (ej. `echo "" >> README.md`) y commitear
+
+**Linear Bridge falla con `GH_TOKEN` not set**
+- El token de GitHub no se pasa automáticamente en `workflow_run`
+- Solución: agregar `GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}` al `env` del step en `linear-bridge.yml`
+
+**Linear Bridge falla con `Team 'DEMO' not found in Linear`**
+- Falta el secret `LINEAR_TEAM_KEY` en GitHub, o no se está pasando al step
+- Solución: crear el secret en GitHub y agregarlo al `env` del step:
+  ```yaml
+  LINEAR_TEAM_KEY: ${{ secrets.LINEAR_TEAM_KEY }}
+  ```
+
+**Linear Bridge falla con `This endpoint deprecated` (issueSearch)**
+- Linear deprecó el endpoint `issueSearch` en su API GraphQL
+- Solución: usar `issues` con filtros `title` y `state`:
+  ```graphql
+  issues(filter: {
+      title: { contains: "[CI-BRIDGE]" }
+      state: { type: { in: ["started", "unstarted"] } }
+  }, first: 1)
+  ```
+  Nota: los valores del enum deben ir entre comillas (`"started"`, no `started`)
+
+**`UnicodeEncodeError` al correr `linear_client.py` en Windows**
+- La consola de Windows usa `cp1252` por defecto, que no soporta muchos caracteres Unicode
+- Solución: al inicio de `main()` en `linear_client.py`, redirigir stdout a UTF-8:
+  ```python
+  import io
+  if hasattr(sys.stdout, 'buffer'):
+      sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+  ```
