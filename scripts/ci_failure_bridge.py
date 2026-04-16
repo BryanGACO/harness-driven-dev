@@ -65,12 +65,15 @@ def create_ci_bug(run_id, failed_jobs, branch):
     # Check for existing open bridge issue (idempotent — no duplicates)
     existing = _query("""
         query {
-            issueSearch(query: "[CI-BRIDGE] state:started,unstarted", first: 1) {
+            issues(filter: {
+                title: { contains: "[CI-BRIDGE]" }
+                state: { type: { in: [started, unstarted] } }
+            }, first: 1) {
                 nodes { id identifier }
             }
         }
     """)
-    nodes = existing.get("data", {}).get("issueSearch", {}).get("nodes", [])
+    nodes = existing.get("data", {}).get("issues", {}).get("nodes", [])
 
     if nodes:
         # Add comment to existing issue instead of creating duplicate
